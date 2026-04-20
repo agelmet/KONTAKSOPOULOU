@@ -23,11 +23,11 @@
                 extend: {
                     colors: {
                         brand: {
-                            navy: '#121C26',      /* Deep background */
-                            slate: '#2B3A4A',     /* Secondary dark */
-                            dust: '#7A8B99',      /* Soft text/accents */
-                            sand: '#D9D0C7',      /* Warm luxurious accent */
-                            pearl: '#F7F6F4',     /* Main light background */
+                            navy: '#121C26',      
+                            slate: '#2B3A4A',     
+                            dust: '#7A8B99',      
+                            sand: '#D9D0C7',      
+                            pearl: '#F7F6F4',     
                             white: '#FFFFFF'
                         }
                     },
@@ -40,6 +40,7 @@
                         'float': '0 30px 60px -20px rgba(18, 28, 38, 0.15)',
                         'glass': '0 8px 32px 0 rgba(18, 28, 38, 0.05)',
                         'logo': '0 10px 30px -5px rgba(18, 28, 38, 0.2)',
+                        'glow': '0 0 30px -5px rgba(217, 208, 199, 0.3)',
                     },
                     animation: {
                         'float': 'float 8s ease-in-out infinite',
@@ -73,7 +74,6 @@
     </script>
 
     <style>
-        /* Smooth Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #F7F6F4; }
         ::-webkit-scrollbar-thumb { background: #D9D0C7; border-radius: 4px; }
@@ -81,18 +81,15 @@
 
         body { background-color: #F7F6F4; color: #121C26; overflow-x: hidden; }
 
-        /* Typography Fixes */
         .tracking-widest-lux { letter-spacing: 0.15em; }
         .text-balance { text-wrap: balance; }
 
-        /* Scroll Reveal */
         .reveal { opacity: 0; transform: translateY(50px); transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .delay-100 { transition-delay: 100ms; }
         .delay-200 { transition-delay: 200ms; }
         .delay-300 { transition-delay: 300ms; }
 
-        /* Glassmorphism */
         .glass-nav {
             background: rgba(247, 246, 244, 0.85);
             backdrop-filter: blur(16px);
@@ -100,23 +97,13 @@
             border-bottom: 1px solid rgba(18, 28, 38, 0.05);
         }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-        }
-
-        /* Hover Effects */
         .img-wrap { overflow: hidden; }
         .img-wrap img { transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .img-wrap:hover img { transform: scale(1.05); }
 
-        /* Marquee */
         .marquee-wrapper { display: flex; width: 200%; }
         .marquee-wrapper:hover { animation-play-state: paused; }
 
-        /* Lightbox */
         #lightbox {
             opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -126,53 +113,59 @@
         #lightbox img { transform: scale(0.95); transition: transform 0.5s ease; }
         #lightbox.active img { transform: scale(1); }
 
-        /* Dynamic Line */
         .lux-line {
             width: 1px;
-            height: 60px;
+            height: 40px;
             background: linear-gradient(to bottom, transparent, #D9D0C7, transparent);
             margin: 0 auto;
         }
 
-        /* Services Wow Accordion */
-        .service-details {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
-            opacity: 0;
-        }
-        .service-card:hover .service-details {
-            max-height: 200px; /* Adjust based on content */
-            opacity: 1;
-            margin-top: 1rem;
-        }
-        .service-card {
-            transition: background-color 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
-        }
-        .service-card:hover {
-            background-color: #FFFFFF;
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px -15px rgba(18, 28, 38, 0.05);
-        }
-        
-        /* Hero Wow factors */
         .hero-title-part {
             display: inline-block;
             opacity: 0;
             animation: revealText 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
         }
-        .hero-title-part:nth-child(1) { animation-delay: 0.2s; }
-        .hero-title-part:nth-child(2) { animation-delay: 0.4s; }
-        .hero-title-part:nth-child(3) { animation-delay: 0.6s; }
+        .hero-title-part:nth-child(1) { animation-delay: 0.1s; }
+        .hero-title-part:nth-child(2) { animation-delay: 0.3s; }
+        .hero-title-part:nth-child(3) { animation-delay: 0.5s; }
 
-        /* Interactive gradient overlay for Hero */
         #hero-gradient {
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at center, transparent 0%, rgba(18, 28, 38, 0.4) 100%);
+            background: radial-gradient(circle at center, transparent 0%, rgba(18, 28, 38, 0.5) 100%);
             z-index: 15;
             pointer-events: none;
             transition: background 0.3s ease;
+        }
+
+        /* Modal Styles */
+        #cv-modal {
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            background: rgba(18, 28, 38, 0.85);
+        }
+        #cv-modal.active { opacity: 1; pointer-events: auto; }
+        .modal-content-box { transform: translateY(30px); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        #cv-modal.active .modal-content-box { transform: translateY(0); }
+
+        /* Service Cards specific Wow effect */
+        .service-wow-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(217, 208, 199, 0.3);
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .service-wow-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 1);
+            box-shadow: var(--tw-shadow-glow), var(--tw-shadow-lux);
+            border-color: rgba(217, 208, 199, 0.8);
+        }
+        .service-icon-box {
+            transition: transform 0.5s ease;
+        }
+        .service-wow-card:hover .service-icon-box {
+            transform: scale(1.1) rotate(5deg);
         }
     </style>
 
@@ -187,7 +180,7 @@
                 <div class="absolute -inset-1 bg-brand-sand/10 rounded-sm blur-sm opacity-0 group-hover:opacity-100 transition duration-700"></div>
                 <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0057.jpg" 
                      alt="Logo" 
-                     class="relative h-14 w-14 object-contain rounded-sm shadow-logo border border-white/50 transform transition-transform duration-700 group-hover:scale-105">
+                     class="relative h-14 w-14 object-contain rounded-sm shadow-logo border border-brand-sand/30 transform transition-transform duration-700 group-hover:scale-105">
             </a>
 
             <div class="hidden lg:flex items-center space-x-10">
@@ -196,10 +189,7 @@
                 <a href="#services" class="text-xs uppercase tracking-widest-lux font-semibold text-brand-navy/70 hover:text-brand-navy transition-colors">Υπηρεσίες</a>
                 <a href="#space" class="text-xs uppercase tracking-widest-lux font-semibold text-brand-navy/70 hover:text-brand-navy transition-colors">Ο Χώρος</a>
                 <a href="#reviews" class="text-xs uppercase tracking-widest-lux font-semibold text-brand-navy/70 hover:text-brand-navy transition-colors">Εμπειρίες</a>
-                
-                <a href="#contact" class="px-8 py-3.5 bg-brand-navy text-white text-xs uppercase tracking-widest-lux font-semibold hover:bg-brand-slate shadow-lux transition-all duration-500 hover:-translate-y-1">
-                    Κλείστε Ραντεβού
-                </a>
+                <a href="#contact" class="px-8 py-3.5 bg-brand-navy text-white text-xs uppercase tracking-widest-lux font-semibold hover:bg-brand-slate shadow-lux transition-all duration-500 hover:-translate-y-1">Κλείστε Ραντεβού</a>
             </div>
 
             <button class="lg:hidden text-brand-navy focus:outline-none" id="mobile-menu-btn">
@@ -217,28 +207,45 @@
         </div>
     </nav>
 
-    <section class="relative h-screen flex items-center justify-center overflow-hidden bg-brand-navy">
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-brand-navy pt-24 pb-16">
         <div class="absolute inset-0 z-0">
-            <div class="w-full h-full bg-cover bg-center animate-kenburns scale-105 grayscale-[30%] opacity-80" style="background-image: url('https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0085.jpg');"></div>
+            <div class="w-full h-full bg-cover bg-center animate-kenburns scale-105 grayscale-[40%] opacity-70" style="background-image: url('https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0085.jpg');"></div>
         </div>
         
         <div id="hero-gradient"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-brand-navy/70 via-transparent to-brand-navy/90 z-10"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-brand-navy/80 via-brand-navy/40 to-brand-navy/95 z-10"></div>
 
-        <div class="relative z-20 text-center px-6 max-w-6xl mx-auto mt-20">
+        <div class="relative z-20 text-center px-6 max-w-5xl mx-auto mt-10">
             <div>
-                <span class="block text-brand-sand text-xs md:text-sm uppercase tracking-[0.4em] font-medium mb-8 opacity-0 animate-reveal-text" style="animation-delay: 0.1s">Ασφαλές Πλαίσιο Αποδοχής & Εμπιστοσύνης</span>
+                <span class="block text-brand-sand text-xs md:text-sm uppercase tracking-[0.4em] font-medium mb-6 opacity-0 animate-reveal-text" style="animation-delay: 0.1s">Ασφαλές Πλαίσιο Αποδοχής & Εμπιστοσύνης</span>
                 
-                <h1 class="text-6xl md:text-7xl lg:text-9xl font-serif text-white leading-[1.1] mb-12 text-balance drop-shadow-2xl">
-                    <span class="hero-title-part">Επούλωση,</span> <br>
-                    <span class="hero-title-part">Εξέλιξη &</span> <br>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif text-white leading-[1.1] mb-8 text-balance drop-shadow-2xl">
+                    <span class="hero-title-part">Επούλωση,</span>
+                    <span class="hero-title-part">Εξέλιξη &</span>
                     <span class="hero-title-part italic text-brand-sand">Ψυχική Ισορροπία</span>
                 </h1>
                 
-                <div class="lux-line mb-12 bg-white/20 opacity-0 animate-reveal-text" style="animation-delay: 1s"></div>
+                <div class="lux-line mb-8 bg-white/20 opacity-0 animate-reveal-text" style="animation-delay: 0.8s"></div>
 
-                <div class="opacity-0 animate-reveal-text" style="animation-delay: 1.2s">
-                    <a href="#contact" class="inline-flex items-center justify-center px-12 py-5 bg-transparent border border-brand-sand/40 text-white text-sm uppercase tracking-widest-lux hover:bg-brand-sand hover:text-brand-navy hover:border-brand-sand transition-all duration-500 backdrop-blur-sm group">
+                <div class="opacity-0 animate-reveal-text" style="animation-delay: 1s">
+                    <p class="text-white/80 max-w-3xl mx-auto text-base md:text-lg font-light leading-relaxed mb-8">
+                        Η φροντίδα της ψυχικής υγείας αποτελεί ουσιαστικό μέρος της συνολικής ευεξίας. Μέσα από ένα πλαίσιο αποδοχής, εμπιστοσύνης και επιστημονικής γνώσης, παρέχεται υποστήριξη με στόχο την κατανόηση του εαυτού, τη διαχείριση των δυσκολιών και την ενίσχυση της ψυχικής ισορροπίας.
+                    </p>
+
+                    <div class="mb-12">
+                        <span class="text-brand-sand/70 text-xs uppercase tracking-widest-lux font-semibold block mb-4">ΕΞΕΙΔΙΚΕΥΣΗ ΣΕ:</span>
+                        <div class="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-white/90 text-xs md:text-sm backdrop-blur-md bg-white/5">Γνωσιακή Συμπεριφοριστική Ψυχοθεραπεία (CBT)</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-white/90 text-xs md:text-sm backdrop-blur-md bg-white/5">Διαλεκτική Συμπεριφορική Ψυχοθεραπεία (DBT)</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-white/90 text-xs md:text-sm backdrop-blur-md bg-white/5">Συστημική Ψυχοθεραπεία</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-white/90 text-xs md:text-sm backdrop-blur-md bg-white/5">Τραυματοθεραπεία EMDR</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-white/90 text-xs md:text-sm backdrop-blur-md bg-white/5">Νευροψυχολογική Αξιολόγηση/Αξιολόγηση Νοητικών Λειτουργιών</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-white/90 text-xs md:text-sm backdrop-blur-md bg-white/5">Νοητική Ενδυνάμωση/Αποκατάσταση</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-white/90 text-xs md:text-sm backdrop-blur-md bg-white/5">Υποστήριξη Γονέων και Εφήβων</span>
+                        </div>
+                    </div>
+
+                    <a href="#contact" class="inline-flex items-center justify-center px-10 py-4 bg-transparent border border-brand-sand/40 text-white text-xs uppercase tracking-widest-lux hover:bg-brand-sand hover:text-brand-navy hover:border-brand-sand transition-all duration-500 backdrop-blur-sm group">
                         Κλείστε Ραντεβού
                         <i data-lucide="arrow-right" class="w-4 h-4 ml-3 group-hover:translate-x-2 transition-transform"></i>
                     </a>
@@ -247,30 +254,22 @@
         </div>
     </section>
 
-    <section id="about" class="py-32 px-6 bg-brand-pearl relative">
+    <section id="about" class="py-24 px-6 bg-brand-pearl relative">
         <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
-            
             <div class="relative reveal">
-                <div class="img-wrap shadow-float bg-white p-4">
-                    <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0057.jpg" alt="Ψυχική Υγεία" class="w-full h-auto object-containgrayscale-[20%]">
+                <div class="img-wrap shadow-float bg-white p-4 border border-brand-sand/20">
+                    <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0057.jpg" alt="Ψυχική Υγεία" class="w-full h-auto object-contain grayscale-[15%]">
                 </div>
                 <div class="absolute -bottom-8 -right-8 w-64 h-64 border border-brand-sand z-[-1]"></div>
             </div>
-
             <div class="reveal delay-200 space-y-8">
                 <span class="text-brand-dust text-xs uppercase tracking-widest-lux font-semibold">Η Προσέγγιση Μας</span>
                 <h2 class="text-4xl md:text-5xl font-serif text-brand-navy leading-tight text-balance">Η φροντίδα της ψυχικής υγείας αποτελεί το θεμέλιο της συνολικής μας ευεξίας.</h2>
                 <div class="w-16 h-px bg-brand-sand mb-10"></div>
                 <div class="space-y-6 text-lg text-brand-dust font-light leading-relaxed">
-                    <p>
-                        Στον χώρο μας, πιστεύουμε ότι κάθε άνθρωπος έχει τη δυνατότητα να εξελιχθεί και να ξεπεράσει τα εμπόδια που περιορίζουν την καθημερινότητά του. 
-                    </p>
-                    <p>
-                        Μέσα από ένα ασφαλές πλαίσιο αποδοχής, ενσυναίσθησης και απόλυτης εμπιστοσύνης, σας παρέχουμε την υποστήριξη που χρειάζεστε.
-                    </p>
-                    <p>
-                        Συνδυάζοντας τη βαθιά ανθρώπινη σύνδεση με την πιο σύγχρονη, επιστημονικά τεκμηριωμένη γνώση, είμαστε εδώ για να σας βοηθήσουμε να κατανοήσετε τον εαυτό σας, να διαχειριστείτε αποτελεσματικά τις δυσκολίες και να ανακτήσετε την ψυχική σας ισορροπία.
-                    </p>
+                    <p>Στον χώρο μας, πιστεύουμε ότι κάθε άνθρωπος έχει τη δυνατότητα να εξελιχθεί και να ξεπεράσει τα εμπόδια που περιορίζουν την καθημερινότητά του.</p>
+                    <p>Μέσα από ένα ασφαλές πλαίσιο αποδοχής, ενσυναίσθησης και απόλυτης εμπιστοσύνης, σας παρέχουμε την υποστήριξη που χρειάζεστε.</p>
+                    <p>Συνδυάζοντας τη βαθιά ανθρώπινη σύνδεση με την πιο σύγχρονη, επιστημονικά τεκμηριωμένη γνώση, είμαστε εδώ για να σας βοηθήσουμε να κατανοήσετε τον εαυτό σας, να διαχειριστείτε αποτελεσματικά τις δυσκολίες και να ανακτήσετε την ψυχική σας ισορροπία.</p>
                 </div>
             </div>
         </div>
@@ -294,11 +293,14 @@
                 <div class="lg:col-span-7 space-y-6">
                     <h3 class="text-4xl font-serif text-brand-navy">Διονυσία Κονταξοπούλου</h3>
                     <p class="text-sm font-semibold tracking-widest-lux text-brand-dust uppercase pb-4 border-b border-brand-pearl">Ψυχολόγος – Νευροψυχολόγος & Ψυχοθεραπεύτρια</p>
-                    <div class="text-brand-dust font-light leading-relaxed space-y-4 text-sm md:text-base">
-                        <p>Η Διονυσία Κονταξοπούλου διαθέτει εκτενή εμπειρία στην κλινική πράξη, την έρευνα και την πανεπιστημιακή διδασκαλία. Ολοκλήρωσε τις σπουδές της στο ΕΚΠΑ και αποφοίτησε με Άριστα από το μεταπτυχιακό «Κλινική Νευροψυχολογία» (Ιατρική Σχολή ΕΚΠΑ & Univ. of Texas). Η διδακτορική της διατριβή εκπονήθηκε στη Β΄ Νευρολογική Κλινική του Αττικού Νοσοκομείου με Άριστα.</p>
-                        <p>Η θεραπευτική της προσέγγιση βασίζεται στη Γνωσιακή-Συμπεριφοριστική Θεραπεία (CBT) και είναι εκπαιδευμένη στη Διαλεκτική Συμπεριφοριστική Θεραπεία (DBT). Από το 2020 εργάζεται ως μεταδιδακτορική ερευνήτρια στην Α’ Νευρολογική Κλινική του Αιγινητείου Νοσοκομείου.</p>
-                        <p>Διαθέτει πολυάριθμες δημοσιεύσεις, διδάσκει στο Ελληνικό Ανοικτό Πανεπιστήμιο και έχει μετεκπαιδευτεί σε Mindfulness-Based Cognitive Therapy (MBCT) και ACT.</p>
+                    <div class="text-brand-dust font-light leading-relaxed space-y-4 text-sm md:text-base line-clamp-4">
+                        Η Διονυσία Κονταξοπούλου είναι Ψυχολόγος – Νευροψυχολόγος και Ψυχοθεραπεύτρια με εκτενή εμπειρία στην κλινική πράξη, την έρευνα και την πανεπιστημιακή διδασκαλία. Ολοκλήρωσε τις προπτυχιακές της σπουδές στο τμήμα Ψυχολογίας του Εθνικού & Καποδιστριακού Πανεπιστημίου Αθηνών (ΕΚΠΑ). Στην συνέχεια, αποφοίτησε με Άριστα από το τριετές μεταπτυχιακό πρόγραμμα στην «Κλινική Νευροψυχολογία» που πραγματοποιήθηκε από την Ιατρική Σχολή του ΕΚΠΑ σε συνεργασία με το Health Science Center, University of Texas...
                     </div>
+                    <button onclick="openCvModal('cv-dionysia')" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest-lux text-brand-navy hover:text-brand-sand transition-colors mt-2 group">
+                        <i data-lucide="file-text" class="w-4 h-4 text-brand-sand"></i>
+                        Διαβάστε το πλήρες Βιογραφικό
+                        <i data-lucide="arrow-right" class="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all"></i>
+                    </button>
                 </div>
             </div>
 
@@ -311,11 +313,15 @@
                 <div class="lg:col-span-7 lg:order-1 space-y-6 text-left lg:text-right flex flex-col items-start lg:items-end">
                     <h3 class="text-4xl font-serif text-brand-navy">Καλλιόπη Βούρου</h3>
                     <p class="text-sm font-semibold tracking-widest-lux text-brand-dust uppercase pb-4 border-b border-brand-pearl w-full lg:w-auto">Ψυχολόγος – Νευροψυχολόγος & Ψυχοθεραπεύτρια</p>
-                    <div class="text-brand-dust font-light leading-relaxed space-y-4 text-sm md:text-base">
-                        <p>Απόφοιτος του Τμήματος Ψυχολογίας του ΕΚΠΑ και κάτοχος Μεταπτυχιακού στην «Κλινική Νευροψυχολογία & Νοητικές Νευροεπιστήμες» (ΕΚΠΑ - McGill University). Έχει πραγματοποιήσει μετεκπαιδεύσεις σε πανεπιστημιακά ιδρύματα της Γαλλίας (Paris Cité, Strasbourg).</p>
-                        <p>Η θεραπευτική της προσέγγιση βασίζεται στη Συστημική Ψυχοθεραπεία και την Τραυματοθεραπεία EMDR. Παρέχει υπηρεσίες σε ενήλικες, ζευγάρια, παιδιά και εφήβους, ενώ εξειδικεύεται στη νοητική ενδυνάμωση ατόμων με άνοια.</p>
-                        <p>Από το 2020 συνεργάζεται με την Α’ Νευρολογική Κλινική του Αιγινητείου, εκπονώντας διδακτορική διατριβή για τη μουσική αντίληψη στα νευροεκφυλιστικά νοσήματα.</p>
+                    <div class="text-brand-dust font-light leading-relaxed space-y-4 text-sm md:text-base line-clamp-4 lg:text-right">
+                        Η Καλλιόπη Βούρου είναι Ψυχολόγος – Νευροψυχολόγος και Ψυχοθεραπεύτρια, με εξειδίκευση στην κλινική αξιολόγηση και ψυχοθεραπευτική παρέμβαση σε ενήλικες, παιδιά και εφήβους. Είναι απόφοιτος του Τμήματος Ψυχολογίας του Εθνικού και Καποδιστριακού Πανεπιστημίου Αθηνών και κάτοχος Μεταπτυχιακού Διπλώματος στην «Κλινική Νευροψυχολογία & Νοητικές Νευροεπιστήμες» της Ιατρικής Σχολής του ΕΚΠΑ, σε συνεργασία με το McGill University...
                     </div>
+                    <button onclick="openCvModal('cv-kalliopi')" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest-lux text-brand-navy hover:text-brand-sand transition-colors mt-2 group">
+                        <i data-lucide="arrow-left" class="w-4 h-4 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all hidden lg:block"></i>
+                        Διαβάστε το πλήρες Βιογραφικό
+                        <i data-lucide="file-text" class="w-4 h-4 text-brand-sand"></i>
+                        <i data-lucide="arrow-right" class="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all lg:hidden"></i>
+                    </button>
                 </div>
             </div>
 
@@ -328,11 +334,14 @@
                 <div class="lg:col-span-7 space-y-6">
                     <h3 class="text-4xl font-serif text-brand-navy">Εύα Σμαραγδάκη</h3>
                     <p class="text-sm font-semibold tracking-widest-lux text-brand-dust uppercase pb-4 border-b border-brand-pearl">Κλινική Νευροψυχολόγος & CBT Ψυχοθεραπεύτρια</p>
-                    <div class="text-brand-dust font-light leading-relaxed space-y-4 text-sm md:text-base">
-                        <p>Υποψήφια διδάκτωρ της Ιατρικής Σχολής Αθηνών (Α’ Νευρολογική Κλινική, Αιγινήτειο). Αποφοίτησε με Άριστα από την Ψυχολογία ΕΚΠΑ και ολοκλήρωσε πρώτη σε κατάταξη το μεταπτυχιακό πρόγραμμα στην Κλινική Νευροψυχολογία (ΕΚΠΑ & McGill University).</p>
-                        <p>Η προσέγγισή της βασίζεται στη Γνωσιακή-Συμπεριφοριστική Θεραπεία (CBT), εργαζόμενη με άγχος, κρίσεις πανικού, OCD και δυσκολίες διαπροσωπικών σχέσεων. Εξειδικεύεται στην αξιολόγηση και αποκατάσταση νοητικών λειτουργιών σε άτομα με νευροεκφυλιστικά νοσήματα (Alzheimer, Πάρκινσον).</p>
-                        <p>Εστιάζει στη δημιουργία συνεργατικής σχέσης, υποστηρίζοντας τόσο τους ασθενείς όσο και τους φροντιστές τους προς τη βελτίωση της ποιότητας ζωής.</p>
+                    <div class="text-brand-dust font-light leading-relaxed space-y-4 text-sm md:text-base line-clamp-4">
+                        Η Εύα Σμαραγδάκη είναι Κλινική Νευροψυχολόγος (MSc), Γνωσιακή-Συμπεριφοριστική Ψυχοθεραπεύτρια και υποψήφια διδάκτωρ της Ιατρικής Σχολής Αθηνών, στην Α’ Νευρολογική Κλινική του Αιγινητείου Πανεπιστημιακού Νοσοκομείου. Διαθέτει ουσιαστική κλινική και ερευνητική εμπειρία, με σταθερό προσανατολισμό στη σύνδεση της επιστημονικής γνώσης με την ουσιαστική, εξατομικευμένη φροντίδα, με στόχο τη βελτίωση της ποιότητας ζωής...
                     </div>
+                    <button onclick="openCvModal('cv-eva')" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest-lux text-brand-navy hover:text-brand-sand transition-colors mt-2 group">
+                        <i data-lucide="file-text" class="w-4 h-4 text-brand-sand"></i>
+                        Διαβάστε το πλήρες Βιογραφικό
+                        <i data-lucide="arrow-right" class="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all"></i>
+                    </button>
                 </div>
             </div>
 
@@ -345,11 +354,15 @@
                 <div class="lg:col-span-7 lg:order-1 space-y-6 text-left lg:text-right flex flex-col items-start lg:items-end">
                     <h3 class="text-4xl font-serif text-brand-navy">Άνκα Δαβίλα</h3>
                     <p class="text-sm font-semibold tracking-widest-lux text-brand-dust uppercase pb-4 border-b border-brand-pearl w-full lg:w-auto">Ψυχολόγος – Νευροψυχολόγος & Ψυχοθεραπεύτρια</p>
-                    <div class="text-brand-dust font-light leading-relaxed space-y-4 text-sm md:text-base">
-                        <p>Ολοκλήρωσε μεταπτυχιακές σπουδές στη «Γνωστική Ψυχολογία και Νευροψυχολογία» στο Πανεπιστήμιο του Kent στην Αγγλία και έχει εκπαιδευτεί στη Γνωσιακή Συμπεριφοριστική Θεραπεία.</p>
-                        <p>Εργάζεται ως ψυχοθεραπεύτρια, εξειδικευμένη στη νευροψυχολογική αξιολόγηση και υποστήριξη ατόμων με γνωστικές διαταραχές. Έχει εργαστεί σε εξειδικευμένες δομές όπως το Κέντρο Ημερήσιας Φροντίδας Ηλικιωμένων (ΚΗΦΗ) και ο Συμβουλευτικός Σταθμός για την Άνοια.</p>
-                        <p>Έχει συμμετάσχει ως βοηθός έρευνας σε ευρωπαϊκά προγράμματα (IntegraCare, EARLYDEM), με γνώμονα πάντα τη δημιουργία ενός ασφαλούς και υποστηρικτικού πλαισίου για τον θεραπευόμενο.</p>
+                    <div class="text-brand-dust font-light leading-relaxed space-y-4 text-sm md:text-base line-clamp-4 lg:text-right">
+                        Η Άνκα Δαβίλα, είναι Ψυχολόγος – Νευροψυχολόγος και Ψυχοθεραπεύτρια με εμπειρία σε θεραπευτικά, ερευνητικά και κλινικά πλαίσια, συμπεριλαμβανομένων δομών ημερήσιας φροντίδας. Έχει σπουδάσει Ψυχολογία και έχει ολοκληρώσει μεταπτυχιακές σπουδές στη «Γνωστική Ψυχολογία και Νευροψυχολογία» στο Πανεπιστήμιο του Kent στην Αγγλία, ενώ έχει εκπαιδευτεί στη Γνωσιακή Συμπεριφοριστική Θεραπεία...
                     </div>
+                    <button onclick="openCvModal('cv-anka')" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest-lux text-brand-navy hover:text-brand-sand transition-colors mt-2 group">
+                        <i data-lucide="arrow-left" class="w-4 h-4 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all hidden lg:block"></i>
+                        Διαβάστε το πλήρες Βιογραφικό
+                        <i data-lucide="file-text" class="w-4 h-4 text-brand-sand"></i>
+                        <i data-lucide="arrow-right" class="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all lg:hidden"></i>
+                    </button>
                 </div>
             </div>
 
@@ -360,89 +373,71 @@
         <div class="max-w-7xl mx-auto">
             
             <div class="mb-24 reveal text-center">
-                <span class="text-brand-dust text-xs uppercase tracking-widest-lux font-semibold">Η Προσέγγιση Μας</span>
+                <span class="text-brand-dust text-xs uppercase tracking-widest-lux font-semibold">Υπηρεσίες</span>
                 <h2 class="text-4xl md:text-5xl font-serif text-brand-navy mt-4 mb-6">Υπηρεσίες & Θεραπείες</h2>
                 <div class="w-16 h-px bg-brand-sand mx-auto"></div>
             </div>
 
-            <div class="space-y-6 mb-24 reveal delay-100">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-32 reveal delay-100">
                 
-                <div class="service-card bg-white/50 border border-brand-sand/10 p-8 cursor-default group">
-                    <div class="flex items-center justify-between gap-6">
-                        <div class="flex items-center gap-6">
-                            <span class="text-4xl font-serif text-brand-sand group-hover:text-brand-dust transition-colors">01</span>
-                            <h3 class="text-2xl font-semibold text-brand-navy group-hover:translate-x-2 transition-transform">Ατομικές Συνεδρίες</h3>
-                        </div>
-                        <i data-lucide="plus" class="w-6 h-6 text-brand-sand group-hover:rotate-90 transition-transform"></i>
+                <div class="service-wow-card p-10 flex flex-col group cursor-default">
+                    <div class="service-icon-box w-16 h-16 rounded-full bg-brand-sand/10 flex items-center justify-center mb-8 text-brand-navy">
+                        <i data-lucide="user" class="w-8 h-8 text-brand-slate"></i>
                     </div>
-                    <div class="service-details">
-                        <p class="text-brand-dust text-base font-light leading-relaxed pl-16">Διαταραχές άγχους, κρίσεις πανικού, OCD, κατάθλιψη, διαχείριση πένθους, διαταραχές προσωπικότητας και σωματόμορφες δυσκολίες.</p>
-                    </div>
+                    <h3 class="text-xl font-bold text-brand-navy mb-4">Ατομικές Συνεδρίες</h3>
+                    <p class="text-brand-dust text-sm font-light leading-relaxed">
+                        Εξατομικευμένη ψυχοθεραπευτική παρέμβαση που απευθύνεται σε ένα ευρύ φάσμα ψυχοπαθολογίας. Περιλαμβάνονται διαταραχές άγχους (γενικευμένη αγχώδης διαταραχή, διαταραχή πανικού, ειδικές φοβίες, κοινωνικό άγχος), ιδεοψυχαναγκαστικές και συναφείς διαταραχές, διαταραχές που σχετίζονται με τραύμα και στρεσογόνους παράγοντες (π.χ. διαταραχή μετατραυματικού στρες), διαταραχές διάθεσης, διαχείριση πένθους, διαταραχές ύπνου-εγρήγορσης, διαταραχές προσωπικότητας και νευροαναπτυξιακές διαταραχές (π.χ. ΔΕΠΥ, διαταραχές αυτιστικού φάσματος). Επιπλέον, περιλαμβάνονται σωματόμορφες διαταραχές και δυσκολίες προσαρμογής ή διαπροσωπικής λειτουργικότητας.
+                    </p>
                 </div>
 
-                <div class="service-card bg-white/50 border border-brand-sand/10 p-8 cursor-default group">
-                    <div class="flex items-center justify-between gap-6">
-                        <div class="flex items-center gap-6">
-                            <span class="text-4xl font-serif text-brand-sand group-hover:text-brand-dust transition-colors">02</span>
-                            <h3 class="text-2xl font-semibold text-brand-navy group-hover:translate-x-2 transition-transform">Online Συνεδρίες</h3>
-                        </div>
-                        <i data-lucide="plus" class="w-6 h-6 text-brand-sand group-hover:rotate-90 transition-transform"></i>
+                <div class="service-wow-card p-10 flex flex-col group cursor-default">
+                    <div class="service-icon-box w-16 h-16 rounded-full bg-brand-sand/10 flex items-center justify-center mb-8 text-brand-navy">
+                        <i data-lucide="monitor-smartphone" class="w-8 h-8 text-brand-slate"></i>
                     </div>
-                    <div class="service-details">
-                        <p class="text-brand-dust text-base font-light leading-relaxed pl-16">Εξ αποστάσεως υποστήριξη για όσους δυσκολεύονται να παρευρεθούν δια ζώσης, εξασφαλίζοντας σταθερότητα στη θεραπεία.</p>
-                    </div>
+                    <h3 class="text-xl font-bold text-brand-navy mb-4">Online Συνεδρίες</h3>
+                    <p class="text-brand-dust text-sm font-light leading-relaxed">
+                        Συνεδρίες που πραγματοποιούνται εξ αποστάσεως και απευθύνονται σε άτομα που δεν μπορούν να παρευρεθούν δια ζώσης (π.χ. λόγω απόστασης ή διαμονής στο εξωτερικό), διασφαλίζοντας σταθερότητα και συνέχεια στη θεραπευτική διαδικασία.
+                    </p>
                 </div>
 
-                <div class="service-card bg-white/50 border border-brand-sand/10 p-8 cursor-default group">
-                    <div class="flex items-center justify-between gap-6">
-                        <div class="flex items-center gap-6">
-                            <span class="text-4xl font-serif text-brand-sand group-hover:text-brand-dust transition-colors">03</span>
-                            <h3 class="text-2xl font-semibold text-brand-navy group-hover:translate-x-2 transition-transform">Ομαδικές Συνεδρίες</h3>
-                        </div>
-                        <i data-lucide="plus" class="w-6 h-6 text-brand-sand group-hover:rotate-90 transition-transform"></i>
+                <div class="service-wow-card p-10 flex flex-col group cursor-default">
+                    <div class="service-icon-box w-16 h-16 rounded-full bg-brand-sand/10 flex items-center justify-center mb-8 text-brand-navy">
+                        <i data-lucide="users-round" class="w-8 h-8 text-brand-slate"></i>
                     </div>
-                    <div class="service-details">
-                        <p class="text-brand-dust text-base font-light leading-relaxed pl-16">Συστημικές παρεμβάσεις και ομάδες DBT για τη ρύθμιση συναισθημάτων και την ενίσχυση της επικοινωνίας.</p>
-                    </div>
+                    <h3 class="text-xl font-bold text-brand-navy mb-4">Ομαδικές Συνεδρίες</h3>
+                    <p class="text-brand-dust text-sm font-light leading-relaxed">
+                        Ομαδικές παρεμβάσεις που βασίζονται στη συστημική προσέγγιση, με έμφαση στην κατανόηση των σχεσιακών μοτίβων και των οικογενειακών δυναμικών. Παράλληλα, πραγματοποιούνται ομάδες Διαλεκτικής Συμπεριφορικής Θεραπείας (DBT), εστιασμένες στην εκπαίδευση δεξιοτήτων, όπως η ρύθμιση συναισθημάτων, η ανοχή στη δυσφορία, η ενσυνειδητότητα και η αποτελεσματική επικοινωνία, με στόχο την ενίσχυση της λειτουργικότητας και της ψυχικής ανθεκτικότητας.
+                    </p>
                 </div>
 
-                <div class="service-card bg-white/50 border border-brand-sand/10 p-8 cursor-default group">
-                    <div class="flex items-center justify-between gap-6">
-                        <div class="flex items-center gap-6">
-                            <span class="text-4xl font-serif text-brand-sand group-hover:text-brand-dust transition-colors">04</span>
-                            <h3 class="text-2xl font-semibold text-brand-navy group-hover:translate-x-2 transition-transform">Νευροψυχολογική Αξιολόγηση</h3>
-                        </div>
-                        <i data-lucide="plus" class="w-6 h-6 text-brand-sand group-hover:rotate-90 transition-transform"></i>
+                <div class="service-wow-card p-10 flex flex-col group cursor-default">
+                    <div class="service-icon-box w-16 h-16 rounded-full bg-brand-sand/10 flex items-center justify-center mb-8 text-brand-navy">
+                        <i data-lucide="brain" class="w-8 h-8 text-brand-slate"></i>
                     </div>
-                    <div class="service-details">
-                        <p class="text-brand-dust text-base font-light leading-relaxed pl-16">Εκτίμηση μνήμης, προσοχής, γλώσσας σε περιπτώσεις άνοιας ή κακώσεων για στοχευμένη αποκατάσταση.</p>
-                    </div>
+                    <h3 class="text-xl font-bold text-brand-navy mb-4">Νευροψυχολογική Αξιολόγηση</h3>
+                    <p class="text-brand-dust text-sm font-light leading-relaxed">
+                        Εξειδικευμένη διαδικασία εκτίμησης των νοητικών λειτουργιών, όπως η μνήμη, η προσοχή, οι εκτελεστικές λειτουργίες, η γλώσσα και η οπτικοχωρική ικανότητα. Εφαρμόζεται σε περιπτώσεις νευρολογικών νοσημάτων (π.χ. άνοια, κρανιοεγκεφαλικές κακώσεις, αγγειακά εγκεφαλικά επεισόδια), αλλά και σε ψυχιατρικές ή αναπτυξιακές δυσκολίες. Στόχος είναι η αποτύπωση του γνωστικού προφίλ, η συμβολή στη διαγνωστική διερεύνηση και ο σχεδιασμός κατάλληλων παρεμβάσεων ή αποκατάστασης.
+                    </p>
                 </div>
 
-                <div class="service-card bg-white/50 border border-brand-sand/10 p-8 cursor-default group">
-                    <div class="flex items-center justify-between gap-6">
-                        <div class="flex items-center gap-6">
-                            <span class="text-4xl font-serif text-brand-sand group-hover:text-brand-dust transition-colors">05</span>
-                            <h3 class="text-2xl font-semibold text-brand-navy group-hover:translate-x-2 transition-transform">Νοητική Ενδυνάμωση</h3>
-                        </div>
-                        <i data-lucide="plus" class="w-6 h-6 text-brand-sand group-hover:rotate-90 transition-transform"></i>
+                <div class="service-wow-card p-10 flex flex-col group cursor-default">
+                    <div class="service-icon-box w-16 h-16 rounded-full bg-brand-sand/10 flex items-center justify-center mb-8 text-brand-navy">
+                        <i data-lucide="puzzle" class="w-8 h-8 text-brand-slate"></i>
                     </div>
-                    <div class="service-details">
-                        <p class="text-brand-dust text-base font-light leading-relaxed pl-16">Παρεμβάσεις ενίσχυσης γνωστικών λειτουργιών σε φυσιολογική γήρανση ή νευρολογικές δυσκολίες.</p>
-                    </div>
+                    <h3 class="text-xl font-bold text-brand-navy mb-4">Νοητική Ενδυνάμωση / Αποκατάσταση</h3>
+                    <p class="text-brand-dust text-sm font-light leading-relaxed">
+                        Εξειδικευμένες παρεμβάσεις που στοχεύουν στη βελτίωση, ενίσχυση ή αποκατάσταση γνωστικών λειτουργιών, όπως η μνήμη, η προσοχή και οι εκτελεστικές δεξιότητες. Εφαρμόζονται σε άτομα με νευρολογικές ή νευροψυχολογικές δυσκολίες, καθώς και σε περιπτώσεις φυσιολογικής γήρανσης, με στόχο τη διατήρηση της λειτουργικότητας και την ενίσχυση της αυτονομίας στην καθημερινότητα.
+                    </p>
                 </div>
 
-                <div class="service-card bg-white/50 border border-brand-sand/10 p-8 cursor-default group">
-                    <div class="flex items-center justify-between gap-6">
-                        <div class="flex items-center gap-6">
-                            <span class="text-4xl font-serif text-brand-sand group-hover:text-brand-dust transition-colors">06</span>
-                            <h3 class="text-2xl font-semibold text-brand-navy group-hover:translate-x-2 transition-transform">Υποστήριξη Γονέων & Εφήβων</h3>
-                        </div>
-                        <i data-lucide="plus" class="w-6 h-6 text-brand-sand group-hover:rotate-90 transition-transform"></i>
+                <div class="service-wow-card p-10 flex flex-col group cursor-default">
+                    <div class="service-icon-box w-16 h-16 rounded-full bg-brand-sand/10 flex items-center justify-center mb-8 text-brand-navy">
+                        <i data-lucide="heart-handshake" class="w-8 h-8 text-brand-slate"></i>
                     </div>
-                    <div class="service-details">
-                        <p class="text-brand-dust text-base font-light leading-relaxed pl-16">Συμβουλευτική για την κατανόηση της συμπεριφοράς, τις αναπτυξιακές ανάγκες και τον γονεϊκό ρόλο.</p>
-                    </div>
+                    <h3 class="text-xl font-bold text-brand-navy mb-4">Υποστήριξη Γονέων & Εφήβων</h3>
+                    <p class="text-brand-dust text-sm font-light leading-relaxed">
+                        Συμβουλευτική και ψυχοεκπαίδευση που εστιάζει στις αναπτυξιακές ανάγκες των εφήβων και στις δυναμικές της οικογένειας. Στόχος είναι η κατανόηση της συμπεριφοράς, η διαχείριση συναισθηματικών και συμπεριφορικών δυσκολιών, καθώς και η ενίσχυση της επικοινωνίας και του γονεϊκού ρόλου μέσα από τεκμηριωμένες παρεμβάσεις.
+                    </p>
                 </div>
 
             </div>
@@ -451,33 +446,52 @@
                 <h3 class="text-3xl font-serif text-brand-navy mb-16 text-center">Ψυχοθεραπευτικές Προσεγγίσεις</h3>
                 
                 <div class="space-y-12">
-                    <div class="flex flex-col md:flex-row gap-6 md:gap-10 border-l-2 border-brand-sand/20 hover:border-brand-sand pl-8 py-2 transition-colors group">
-                        <div class="md:w-1/3 shrink-0 flex items-center gap-3">
-                            <i data-lucide="brain-circuit" class="w-5 h-5 text-brand-sand mt-1 shrink-0"></i>
-                            <h4 class="text-lg font-bold text-brand-slate">Γνωσιακή Συμπεριφοριστική (CBT)</h4>
+                    <div class="border-b border-brand-pearl pb-8 group">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i data-lucide="brain-circuit" class="w-6 h-6 text-brand-sand group-hover:rotate-12 transition-transform"></i>
+                            <h4 class="text-xl font-bold text-brand-slate">Γνωσιακή Συμπεριφοριστική Ψυχοθεραπεία (CBT)</h4>
                         </div>
-                        <p class="text-brand-dust leading-relaxed text-sm font-light">Εστιάζει στη δυναμική αλληλεπίδραση σκέψεων, συναισθημάτων και συμπεριφορών. Μέσα από πρακτικές τεχνικές και δομημένη συνεργασία, βοηθά στην τροποποίηση δυσλειτουργικών πεποιθήσεων και στη διαχείριση άγχους, κατάθλιψης και φοβιών.</p>
+                        <p class="text-brand-dust leading-relaxed text-sm font-light">
+                            Η Γνωσιακή Συμπεριφοριστική Ψυχοθεραπεία αποτελεί την πιο τεκμηριωμένη και ευρέως εφαρμοζόμενη ψυχοθεραπευτική προσέγγιση. Εστιάζει στη δυναμική αλληλεπίδραση μεταξύ σκέψεων, συναισθημάτων, σωματικών αντιδράσεων και συμπεριφορών, καθώς και στον τρόπο με τον οποίο διαμορφώνονται και διατηρούνται τα γνωσιακά σχήματα μέσα από την εμπειρία. Δυσλειτουργικές πεποιθήσεις και γνωσιακές στρεβλώσεις μπορεί να οδηγούν σε επαναλαμβανόμενα μοτίβα που επιβαρύνουν τη λειτουργικότητα του ατόμου.<br><br>
+                            Στο πλαίσιο της θεραπείας, δίνεται έμφαση στο να αναγνωρίσει το άτομο τα μοτίβα σκέψης και συμπεριφοράς που το δυσκολεύουν και να μάθει σταδιακά να τα αλλάζει. Αυτό γίνεται μέσα από πρακτικές τεχνικές, όπως η κατανόηση και επανεξέταση των σκέψεων με πιο ρεαλιστικό τρόπο, η σταδιακή ενεργοποίηση σε δραστηριότητες που έχουν περιοριστεί, η ήπια και σταδιακή έκθεση σε καταστάσεις που προκαλούν άγχος ή αποφυγή, καθώς και η εκμάθηση δεξιοτήτων για καλύτερη διαχείριση συναισθημάτων και καθημερινών δυσκολιών. Η διαδικασία είναι δομημένη και συνεργατική, με στόχο όχι μόνο τη μείωση των συμπτωμάτων αλλά και την καλλιέργεια αυτοπαρατήρησης και αυτορρύθμισης.<br><br>
+                            Η CBT εφαρμόζεται σε ένα ευρύ φάσμα κλινικών και μη κλινικών δυσκολιών, όπως διαταραχές άγχους και διάθεσης, ιδεοψυχαναγκαστικές διαταραχές, διαταραχές πρόσληψης τροφής, διαταραχές ύπνου, σωματόμορφες διαταραχές, ζητήματα διαχείρισης θυμού, χρόνιο στρες, αλλά και σε δυσκολίες που σχετίζονται με αυτοεκτίμηση, τελειοθηρία και διαπροσωπική λειτουργικότητα.
+                        </p>
                     </div>
-                    <div class="flex flex-col md:flex-row gap-6 md:gap-10 border-l-2 border-brand-sand/20 hover:border-brand-sand pl-8 py-2 transition-colors group">
-                        <div class="md:w-1/3 shrink-0 flex items-center gap-3">
-                            <i data-lucide="balance-sheet" class="w-5 h-5 text-brand-sand mt-1 shrink-0"></i>
-                            <h4 class="text-lg font-bold text-brand-slate">Διαλεκτική Συμπεριφορική (DBT)</h4>
+
+                    <div class="border-b border-brand-pearl pb-8 group">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i data-lucide="balance-sheet" class="w-6 h-6 text-brand-sand group-hover:rotate-12 transition-transform"></i>
+                            <h4 class="text-xl font-bold text-brand-slate">Διαλεκτική Συμπεριφορική Ψυχοθεραπεία (DBT)</h4>
                         </div>
-                        <p class="text-brand-dust leading-relaxed text-sm font-light">Αναπτύχθηκε για τη διαχείριση έντονων συναισθημάτων. Εκπαιδεύει στην ενσυνειδητότητα, τη ρύθμιση, την ανοχή στη δυσφορία και την αποτελεσματική επικοινωνία.</p>
+                        <p class="text-brand-dust leading-relaxed text-sm font-light">
+                            Η Διαλεκτική Συμπεριφορική Ψυχοθεραπεία αποτελεί εξέλιξη της γνωσιακής-συμπεριφορικής προσέγγισης και αναπτύχθηκε για άτομα που δυσκολεύονται στη διαχείριση έντονων και μεταβαλλόμενων συναισθημάτων. Κεντρική της αρχή είναι η ισορροπία ανάμεσα στην αποδοχή της εμπειρίας του ατόμου και την προσπάθεια για αλλαγή.<br><br>
+                            Η θεραπεία περιλαμβάνει την εκπαίδευση σε συγκεκριμένες δεξιότητες, οι οποίες οργανώνονται σε τέσσερις βασικούς άξονες: ενσυνειδητότητα, ρύθμιση συναισθημάτων, ανοχή στη δυσφορία και διαπροσωπική αποτελεσματικότητα. Οι δεξιότητες αυτές βοηθούν το άτομο να ανταποκρίνεται με μεγαλύτερη ευελιξία και σταθερότητα σε απαιτητικές ή στρεσογόνες καταστάσεις.<br><br>
+                            Η DBT εφαρμόζεται κυρίως σε περιπτώσεις έντονης συναισθηματικής δυσρρύθμισης, όπως στη διαταραχή οριακής προσωπικότητας, αλλά και σε άλλες δυσκολίες που σχετίζονται με παρορμητικότητα, αυτοκαταστροφικές συμπεριφορές και δυσκολίες στις σχέσεις.
+                        </p>
                     </div>
-                    <div class="flex flex-col md:flex-row gap-6 md:gap-10 border-l-2 border-brand-sand/20 hover:border-brand-sand pl-8 py-2 transition-colors group">
-                        <div class="md:w-1/3 shrink-0 flex items-center gap-3">
-                            <i data-lucide="git-branch" class="w-5 h-5 text-brand-sand mt-1 shrink-0"></i>
-                            <h4 class="text-lg font-bold text-brand-slate">Συστημική Ψυχοθεραπεία</h4>
+
+                    <div class="border-b border-brand-pearl pb-8 group">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i data-lucide="git-branch" class="w-6 h-6 text-brand-sand group-hover:rotate-12 transition-transform"></i>
+                            <h4 class="text-xl font-bold text-brand-slate">Συστημική Ψυχοθεραπεία</h4>
                         </div>
-                        <p class="text-brand-dust leading-relaxed text-sm font-light">Προσεγγίζει το άτομο ως μέρος ευρύτερων συστημάτων (οικογένεια, σχέσεις). Εστιάζει στα μοτίβα επικοινωνίας και αναζητά πιο λειτουργικούς τρόπους αλληλεπίδρασης.</p>
+                        <p class="text-brand-dust leading-relaxed text-sm font-light">
+                            Η Συστημική Ψυχοθεραπεία προσεγγίζει το άτομο ως μέρος ευρύτερων συστημάτων, όπως η οικογένεια, το ζευγάρι και το κοινωνικό περιβάλλον. Οι δυσκολίες δεν εξετάζονται μεμονωμένα, αλλά μέσα από τα μοτίβα αλληλεπίδρασης και επικοινωνίας που αναπτύσσονται στις σχέσεις.<br><br>
+                            Η θεραπευτική διαδικασία εστιάζει στην κατανόηση του τρόπου με τον οποίο οι σχέσεις επηρεάζουν τη συμπεριφορά και τη συναισθηματική εμπειρία. Διερευνώνται επαναλαμβανόμενα μοτίβα, ρόλοι και τρόποι επικοινωνίας που μπορεί να συμβάλλουν στη διατήρηση των δυσκολιών.<br><br>
+                            Στόχος είναι η αναγνώριση εναλλακτικών τρόπων σύνδεσης και επικοινωνίας, καθώς και η ενίσχυση πιο λειτουργικών μορφών αλληλεπίδρασης. Η προσέγγιση εφαρμόζεται σε ατομικές συνεδρίες, αλλά και σε θεραπεία ζεύγους ή οικογένειας.
+                        </p>
                     </div>
-                    <div class="flex flex-col md:flex-row gap-6 md:gap-10 border-l-2 border-brand-sand/20 hover:border-brand-sand pl-8 py-2 transition-colors group">
-                        <div class="md:w-1/3 shrink-0 flex items-center gap-3">
-                            <i data-lucide="eye" class="w-5 h-5 text-brand-sand mt-1 shrink-0"></i>
-                            <h4 class="text-lg font-bold text-brand-slate">Τραυματοθεραπεία EMDR</h4>
+
+                    <div class="group">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i data-lucide="eye" class="w-6 h-6 text-brand-sand group-hover:rotate-12 transition-transform"></i>
+                            <h4 class="text-xl font-bold text-brand-slate">Τραυματοθεραπεία EMDR</h4>
                         </div>
-                        <p class="text-brand-dust leading-relaxed text-sm font-light">Μέθοδος βασισμένη στη διμερή διέγερση (π.χ. οφθαλμικές κινήσεις) που διευκολύνει την επεξεργασία τραυματικών αναμνήσεων, μειώνοντας την ένταση και το άγχος.</p>
+                        <p class="text-brand-dust leading-relaxed text-sm font-light">
+                            Η μέθοδος EMDR αποτελεί μία σύγχρονη, επιστημονικά τεκμηριωμένη προσέγγιση για την επεξεργασία τραυματικών εμπειριών. Βασίζεται στη θεωρία ότι ορισμένα τραυματικά γεγονότα δεν έχουν ενσωματωθεί επαρκώς στη μνήμη και παραμένουν «ενεργά», επηρεάζοντας αρνητικά τη σκέψη, το συναίσθημα και τη συμπεριφορά.<br><br>
+                            Κατά τη διάρκεια της θεραπείας, χρησιμοποιείται διμερής διέγερση (όπως οφθαλμικές κινήσεις), η οποία διευκολύνει την επανεπεξεργασία των τραυματικών αναμνήσεων. Μέσα από αυτή τη διαδικασία, μειώνεται η συναισθηματική ένταση και τροποποιούνται οι αρνητικές πεποιθήσεις που σχετίζονται με το τραύμα.<br><br>
+                            Η EMDR εφαρμόζεται κυρίως στη διαταραχή μετατραυματικού στρες (PTSD), αλλά και σε άλλες καταστάσεις που συνδέονται με τραυματικές εμπειρίες ή έντονο στρες, συμβάλλοντας στη σταδιακή αποφόρτιση και την ψυχολογική επεξεργασία του βιώματος.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -535,7 +549,7 @@
 
                 <div class="relative reveal delay-300">
                     <div class="p-4 bg-brand-pearl border border-brand-sand/10 shadow-lux">
-                        <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0062.jpg" alt="Η ομάδα μας" class="w-full h-auto object-containgrayscale-[10%]">
+                        <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0062.jpg" alt="Η ομάδα μας" class="w-full h-auto object-contain grayscale-[10%]">
                     </div>
                 </div>
             </div>
@@ -554,32 +568,25 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <button class="w-full relative group reveal overflow-hidden shadow-lux cursor-zoom-in bg-white p-3" onclick="openLightbox('https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0085.jpg')">
                     <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0085.jpg" alt="Χώρος" class="w-full h-auto transform group-hover:scale-[1.01] transition-transform duration-700 ease-out object-contain">
-                    <div class="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/10 transition-colors duration-500 flex items-center justify-center"></div>
+                    <div class="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/10 transition-colors duration-500"></div>
                 </button>
                 <button class="w-full relative group reveal delay-100 overflow-hidden shadow-lux cursor-zoom-in bg-white p-3" onclick="openLightbox('https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0087.jpg')">
                     <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0087.jpg" alt="Χώρος" class="w-full h-auto transform group-hover:scale-[1.01] transition-transform duration-700 ease-out object-contain">
-                    <div class="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/10 transition-colors duration-500 flex items-center justify-center"></div>
+                    <div class="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/10 transition-colors duration-500"></div>
                 </button>
                 <button class="w-full relative group reveal overflow-hidden shadow-lux cursor-zoom-in bg-white p-3" onclick="openLightbox('https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0089.jpg')">
                     <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0089.jpg" alt="Χώρος" class="w-full h-auto transform group-hover:scale-[1.01] transition-transform duration-700 ease-out object-contain">
-                    <div class="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/10 transition-colors duration-500 flex items-center justify-center"></div>
+                    <div class="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/10 transition-colors duration-500"></div>
                 </button>
                 <button class="w-full relative group reveal delay-100 overflow-hidden shadow-lux cursor-zoom-in bg-white p-3" onclick="openLightbox('https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0094.jpg')">
                     <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0094.jpg" alt="Χώρος" class="w-full h-auto transform group-hover:scale-[1.01] transition-transform duration-700 ease-out object-contain">
-                    <div class="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/10 transition-colors duration-500 flex items-center justify-center"></div>
+                    <div class="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/10 transition-colors duration-500"></div>
                 </button>
             </div>
         </div>
     </section>
 
-    <div id="lightbox" class="fixed inset-0 z-[100] flex items-center justify-center cursor-zoom-out" onclick="closeLightbox()">
-        <img id="lightbox-img" src="" alt="Zoomed View" class="max-w-[95vw] max-h-[95vh] object-contain shadow-2xl cursor-default" onclick="event.stopPropagation()">
-        <button class="absolute top-8 right-8 text-white/50 hover:text-white transition-colors">
-            <i data-lucide="x" class="w-10 h-10"></i>
-        </button>
-    </div>
-
-    <section id="reviews" class="py-32 bg-brand-pearl overflow-hidden">
+    <section id="reviews" class="py-32 bg-white overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 mb-16 text-center reveal">
             <span class="text-brand-dust text-xs uppercase tracking-widest-lux font-semibold">Αξιολογήσεις</span>
             <h2 class="text-4xl md:text-5xl font-serif text-brand-navy mt-4 mb-6">Εμπειρίες Θεραπευόμενων</h2>
@@ -587,18 +594,16 @@
         </div>
 
         <div class="relative pb-10">
-            <div class="absolute left-0 top-0 bottom-0 w-16 md:w-40 bg-gradient-to-r from-brand-pearl to-transparent z-10 pointer-events-none"></div>
-            <div class="absolute right-0 top-0 bottom-0 w-16 md:w-40 bg-gradient-to-l from-brand-pearl to-transparent z-10 pointer-events-none"></div>
+            <div class="absolute left-0 top-0 bottom-0 w-16 md:w-40 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-16 md:w-40 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
             
             <div class="marquee-wrapper animate-marquee">
-                <div class="flex space-x-6 px-3" id="review-track">
-                    </div>
-                <div class="flex space-x-6 px-3" id="review-track-clone">
-                    </div>
+                <div class="flex space-x-6 px-3" id="review-track"></div>
+                <div class="flex space-x-6 px-3" id="review-track-clone"></div>
             </div>
             
             <div class="text-center mt-16 relative z-20">
-                <a href="https://www.doctoranytime.gr/d/Psychologos/dionysia-kontaksopoulou" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-10 py-4 bg-white border border-brand-sand/30 text-xs font-bold uppercase tracking-widest-lux text-brand-navy hover:bg-brand-sand hover:text-white hover:border-brand-sand transition-all shadow-sm">
+                <a href="https://www.doctoranytime.gr/d/Psychologos/dionysia-kontaksopoulou" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-10 py-4 bg-brand-pearl border border-brand-sand/30 text-xs font-bold uppercase tracking-widest-lux text-brand-navy hover:bg-brand-sand hover:text-white hover:border-brand-sand transition-all shadow-sm">
                     Διαβάστε περισσότερα στο 
                     <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-6 ml-2 object-contain mix-blend-multiply grayscale hover:grayscale-0" alt="Doctoranytime">
                 </a>
@@ -658,11 +663,64 @@
         </div>
     </footer>
 
+    <div id="lightbox" class="fixed inset-0 z-[100] flex items-center justify-center cursor-zoom-out" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="Zoomed View" class="max-w-[95vw] max-h-[95vh] object-contain shadow-2xl cursor-default" onclick="event.stopPropagation()">
+        <button class="absolute top-8 right-8 text-white/50 hover:text-white transition-colors">
+            <i data-lucide="x" class="w-10 h-10"></i>
+        </button>
+    </div>
+
+    <div id="cv-modal" class="fixed inset-0 z-[110] flex items-center justify-center px-4 py-10" onclick="closeCvModal()">
+        <div class="modal-content-box bg-brand-pearl w-full max-w-3xl max-h-full overflow-y-auto rounded-md shadow-2xl relative border border-brand-sand/30" onclick="event.stopPropagation()">
+            <button class="absolute top-6 right-6 text-brand-slate hover:text-brand-navy transition-colors bg-white/50 rounded-full p-2" onclick="closeCvModal()">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div class="p-8 md:p-12">
+                <h3 id="modal-title" class="text-3xl font-serif text-brand-navy mb-2"></h3>
+                <p id="modal-subtitle" class="text-xs font-semibold tracking-widest-lux text-brand-dust uppercase pb-6 mb-6 border-b border-brand-sand/30"></p>
+                <div id="modal-body" class="text-brand-navy font-light leading-relaxed space-y-5 text-sm md:text-base">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cv-data" class="hidden">
+        <div id="cv-dionysia">
+            <p>Η Διονυσία Κονταξοπούλου είναι Ψυχολόγος – Νευροψυχολόγος και Ψυχοθεραπεύτρια με εκτενή εμπειρία στην κλινική πράξη, την έρευνα και την πανεπιστημιακή διδασκαλία. Ολοκλήρωσε τις προπτυχιακές της σπουδές στο τμήμα Ψυχολογίας του Εθνικού & Καποδιστριακού Πανεπιστημίου Αθηνών (ΕΚΠΑ). Στην συνέχεια, αποφοίτησε με Άριστα από το τριετές μεταπτυχιακό πρόγραμμα στην «Κλινική Νευροψυχολογία» που πραγματοποιήθηκε από την Ιατρική Σχολή του ΕΚΠΑ σε συνεργασία με το Health Science Center, University of Texas και εκπόνησε τη διδακτορική της διατριβή στην Β΄ Νευρολογική Κλινική του Αττικού Νοσοκομείου, Ιατρική Σχολή ΕΚΠΑ, την οποία και ολοκλήρωσε με Άριστα.</p>
+            <p>Η θεραπευτική της προσέγγιση βασίζεται στη Γνωσιακή-Συμπεριφοριστική Θεραπεία (CBT), μια επιστημονικά τεκμηριωμένη μέθοδο που στοχεύει στην κατανόηση και την τροποποίηση δυσλειτουργικών μοτίβων σκέψης και συμπεριφοράς. Έχει εκπαιδευτεί στη Γνωσιακή-Συμπεριφοριστική Θεραπεία στο Ινστιτούτο Έρευνας και Θεραπείας της Συμπεριφοράς. Παράλληλα, έχει ολοκληρώσει την εκπαίδευση στη Διαλεκτική Συμπεριφοριστική Θεραπεία (DBT), μέσω του προγράμματος Comprehensive Training in Dialectical Behavioral Therapy της Ελληνικής Εταιρείας Έρευνας της Συμπεριφοράς, σε συνεργασία με το Behavioral Tech του Linehan Institute.</p>
+            <p>Από το 2020 εργάζεται ως μεταδιδακτορική ερευνήτρια και επιστημονική συνεργάτης στην Α’ Νευρολογική Κλινική του Αιγινητείου Νοσοκομείου του ΕΚΠΑ. Στο παρελθόν, εργάστηκε επί σειρά ετών ως επιστημονική συνεργάτης στη Β’ Νευρολογική Κλινική του Πανεπιστημιακού Γενικού Νοσοκομείου «Αττικόν». Στο πλαίσιο της εκπαίδευσής της, έχει πραγματοποιήσει κλινική άσκηση σε σημαντικά νοσοκομειακά και ψυχιατρικά πλαίσια, όπως η Β’ Ψυχιατρική Κλινική του Νοσοκομείου «Αττικόν», το Νοσοκομείο Παίδων Πεντέλης και το Παιδοψυχιατρικό τμήμα του Γενικού Νοσοκομείου Παίδων «Παναγιώτη & Αγλαίας Κυριακού, καθώς και σε δομές ψυχικής υγείας όπως το Κέντρο Ψυχικής Υγείας Χαλανδρίου και το Παιδοψυχιατρικό Τμήμα στο Ιατροπαιδαγωγικό Κέντρο Αθήνας.</p>
+            <p>Έχει εργαστεί ως κύρια ερευνήτρια σε ερευνητικά προγράμματα ευρωπαϊκής εμβέλειας και φαρμακευτικές μελέτες ενώ παράλληλα έχει πραγματοποιήσει πολυάριθμες δημοσιεύσεις σε διεθνή και ελληνικά επιστημονικά περιοδικά και παρουσιάσεις σε διεθνή και ελληνικά επιστημονικά συνέδρια.</p>
+            <p>Από το 2022 διδάσκει Ελληνικό Ανοικτό Πανεπιστήμιο, στο μεταπτυχιακό της Εφαρμοσμένης Αναπτυξιακή Ψυχολογίας. Στο παρελθόν, έχει διδάξει σε προπτυχιακό και μεταπτυχιακό επίπεδο σε ιδρύματα όπως το Πανεπιστήμιο Δυτικής Αττικής, στο Τμήμα Αγωγής και Φροντίδας στην Πρώιμη Παιδική Ηλικία, στο Εθνικό και Καποδιστριακό Πανεπιστήμιο Αθηνών και το Μητροπολιτικό Κολλέγιο– University of East London, καλύπτοντας γνωστικά αντικείμενα όπως η νευροψυχολογία, η γνωστική ψυχολογία, η αναπτυξιακή ψυχολογία και οι νευροεπιστήμες.</p>
+            <p>Η επαγγελματική της κατάρτιση περιλαμβάνει επίσης μετεκπαιδεύσεις στην ψυχοθεραπεία και την κλινική ψυχοπαθολογία στο πλαίσιο πανεπιστημιακών και νοσοκομειακών φορέων. Έχει εκπαιδευτεί στη Γνωσιακή Θεραπεία Βασισμένη στη Δικανική Μέθοδο (TBCT) που διοργανώθηκε από την Εταιρεία Γνωσιακών Συμπεριφοριστικών Σπουδών σε συνεργασία με το Trial-Based Cognitive Therapy Institute καθώς και σε εξειδικευμένες τεχνικές για τις διαταραχές προσωπικότητας. Παράλληλα, έχει ολοκληρώσει εκπαίδευση την βασική εκπαίδευση στη Θεραπεία Αποδοχής και Δέσμευσης (ACT) και στη Mindfulness-Based Cognitive Therapy (MBCT). Τέλος, είναι μέλος της Επιτροπής Δεοντολογίας του Ινστιτούτου Έρευνας και Θεραπείας της Συμπεριφοράς.</p>
+        </div>
+        <div id="cv-kalliopi">
+            <p>Η Καλλιόπη Βούρου είναι Ψυχολόγος – Νευροψυχολόγος και Ψυχοθεραπεύτρια, με εξειδίκευση στην κλινική αξιολόγηση και ψυχοθεραπευτική παρέμβαση σε ενήλικες, παιδιά και εφήβους. Είναι απόφοιτος του Τμήματος Ψυχολογίας του Εθνικού και Καποδιστριακού Πανεπιστημίου Αθηνών και κάτοχος Μεταπτυχιακού Διπλώματος στην «Κλινική Νευροψυχολογία & Νοητικές Νευροεπιστήμες» της Ιατρικής Σχολής του ΕΚΠΑ, σε συνεργασία με το McGill University. Έχει πραγματοποιήσει μετεκπαιδεύσεις και κλινική άσκηση σε πανεπιστημιακά ιδρύματα της Γαλλίας, συγκεκριμένα στο Université Paris Cité και στο Université de Strasbourg.</p>
+            <p>Η θεραπευτική της προσέγγιση βασίζεται στη Συστημική Ψυχοθεραπεία, στην οποία έχει εκπαιδευτεί στο Εργαστήριο Διερεύνησης Ανθρωπίνων Σχέσεων. Παράλληλα, έχει εκπαιδευτεί στην Τραυματοθεραπεία μέσω της μεθόδου EMDR (Eye Movement Desensitization and Reprocessing). Επιπλέον, έχει ολοκληρώσει εξειδικευμένη εκπαίδευση στην Ειδική Αγωγή στο Εθνικό και Καποδιστριακό Πανεπιστήμιο Αθηνών (ΕΚΠΑ), υπό την επιστημονική καθοδήγηση του Καθηγητή Παπαδάτου.</p>
+            <p>Στο πλαίσιο της εκπαίδευσής της, έχει επίσης καταρτιστεί στη θεραπεία ζεύγους και στον σχεδιασμό και την υλοποίηση ψυχοεκπαιδευτικών και θεραπευτικών ομάδων, αποκτώντας εμπειρία στη διαχείριση ομαδικών διεργασιών.</p>
+            <p>Στην κλινική της πρακτική παρέχει ψυχοθεραπευτικές υπηρεσίες σε ενήλικες και ζευγάρια, ενώ διαθέτει σημαντική εμπειρία στην αξιολόγηση και ψυχολογική υποστήριξη παιδιών και εφήβων. Διαθέτει εμπειρία στην υποστήριξη ατόμων με άνοια, με έμφαση στην ολιστική φροντίδα και την προαγωγή της ποιότητας ζωής τους. Παράλληλα, ασχολείται ενεργά με τη δημιουργία εξατομικευμένων προγράμματων νοητικής ενδυνάμωσης, στοχεύοντας στη διατήρηση της λειτουργικότητας, την ενίσχυση της αυτονομίας και τη βελτίωση της νοητικής κατάστασης ατόμων με άνοια.</p>
+            <p>Από το 2020 συνεργάζεται με την Α’ Νευρολογική Κλινική του Αιγινητείου Νοσοκομείου, ενώ από το 2023 εκπονεί τη διδακτορική της διατριβή με αντικείμενο τη μουσική αντίληψη στα νευροεκφυλιστικά νοσήματα, σε συνεργασία με το Τμήμα Μουσικών Σπουδών του Αριστοτελείου Πανεπιστημίου Θεσσαλονίκης, το Τμήμα Ψυχολογίας του Goldsmiths, University of London, καθώς και άλλους διεθνείς ερευνητικούς φορείς. Στο πλαίσιο πρακτικής έχει συνεργαστεί με φορείς όπως «’Β Πανεπιστημιακή Νευρολογική Κλινική, Αττικόν» , «’Β Πανεπιστημιακή Ψυχιατρική Κλινική, Αττικόν» και «Κέντρο Ψυχικής Υγιεινής Βύρωνα».</p>
+            <p>Έχει συμμετάσχει ενεργά σε διεθνή επιστημονικά συνέδρια και στη συγγραφή επιστημονικών άρθρων. Επιπλέον, έχει συμβάλει ως συγγραφέας κεφαλαίου στο συλλογικό τόμο «Συζητώντας για την παιδική κι εφηβική βία», όπου πραγματεύεται τη βιολογική βάση της επιθετικότητας. Τέλος, είναι Ακαδημαϊκή Υπότροφος της Πανελλήνιας Ομοσπονδίας Νόσου Alzheimer και Συναφών Διαταραχών.</p>
+        </div>
+        <div id="cv-eva">
+            <p>Η Εύα Σμαραγδάκη είναι Κλινική Νευροψυχολόγος (MSc), Γνωσιακή-Συμπεριφοριστική Ψυχοθεραπεύτρια και υποψήφια διδάκτωρ της Ιατρικής Σχολής Αθηνών, στην Α’ Νευρολογική Κλινική του Αιγινητείου Πανεπιστημιακού Νοσοκομείου. Διαθέτει ουσιαστική κλινική και ερευνητική εμπειρία, με σταθερό προσανατολισμό στη σύνδεση της επιστημονικής γνώσης με την ουσιαστική, εξατομικευμένη φροντίδα, με στόχο τη βελτίωση της ποιότητας ζωής και της καθημερινής λειτουργικότητας των ανθρώπων.</p>
+            <p>Αποφοίτησε με Άριστα από το Τμήμα Ψυχολογίας του Εθνικού και Καποδιστριακού Πανεπιστημίου Αθηνών και στη συνέχεια εξειδικεύτηκε στην άνοια μέσω της Ελληνικής Γεροντολογικής και Ψυχογηριατρικής Εταιρείας. Ολοκλήρωσε πρώτη σε κατάταξη το μεταπτυχιακό πρόγραμμα «Κλινική Νευροψυχολογία-Νοητικές Νευροεπιστήμες» της Ιατρικής Σχολής ΕΚΠΑ, σε συνεργασία με το Πανεπιστήμιο McGill του Καναδά.</p>
+            <p>Η θεραπευτική της προσέγγιση βασίζεται στη Γνωσιακή-Συμπεριφοριστική Θεραπεία (CBT), μια επιστημονικά τεκμηριωμένη μέθοδο που στοχεύει στην κατανόηση και την τροποποίηση δυσλειτουργικών μοτίβων σκέψης και συμπεριφοράς. Έχει εκπαιδευτεί στη Γνωσιακή-Συμπεριφοριστική Θεραπεία στο Ινστιτούτο Έρευνας και Θεραπείας της Συμπεριφοράς. Στην ψυχοθεραπευτική της πρακτική, εργάζεται με ενήλικες που αντιμετωπίζουν: διαταραχές άγχους (γενικευμένο άγχος, κρίσεις πανικού, άγχος υγείας, φοβίες), ιδεοψυχαναγκαστική διαταραχή (OCD), καταθλιπτική συμπτωματολογία, δυσκολίες στις διαπροσωπικές σχέσεις και ζητήματα προσωπικότητας.</p>
+            <p>Στο πλαίσιο της εκπαίδευσής της, πραγματοποίησε την κλινική της άσκηση σε εξειδικευμένα νοσοκομειακά ιδρύματα, όπως η Β’ Ψυχιατρική Κλινική και η Β’ Νευρολογική Κλινική του Π.Γ.Ν. «Αττικόν», η Α’ Νευρολογική Κλινική του Αιγινητείου Νοσοκομείου, καθώς και η Παιδονευρολογική Κλινική του Ναυτικού Νοσοκομείου Πειραιώς. Παράλληλα, διετέλεσε επιστημονική συνεργάτης στη Β’ Νευρολογική Κλινική του Π.Γ.Ν. «Αττικόν» (2019-2020), αποκτώντας σημαντική εμπειρία στη διαχείριση σύνθετων περιστατικών.</p>
+            <p>Από το 2020 συνεργάζεται με την Α’ Νευρολογική Κλινική του Αιγινητείου Νοσοκομείου, όπου εκπονεί τη διδακτορική της διατριβή με αντικείμενο την αξιολόγηση της απραξίας σε νευροεκφυλιστικά νοσήματα, τόσο δια ζώσης όσο και μέσω τηλεϊατρικής. Έχει ενεργή συμμετοχή σε επιστημονικά προγράμματα και συνέδρια στην Ελλάδα και το εξωτερικό και επιστημονικές δημοσιεύσεις σε διεθνή περιοδικά. Για το ερευνητικό της έργο έχει λάβει υποτροφία από την Πανελλήνια Ομοσπονδία Νόσου Alzheimer και Συγγενών Διαταραχών, ενώ πρόσφατα συμμετείχε στη συγγραφή κεφαλαίου με τίτλο «Νοητικές και συμπεριφορικές διαταραχές στα άτυπα παρκινσονικά σύνδρομα» σε βιβλίο Νευρολογίας. Έχει διδάξει σε μεταπτυχιακό επίπεδο μαθήματα Νευροψυχολογίας στην Ιατρική Σχολή Αθηνών και το ISΤ.</p>
+            <p>Κλινικά, εξειδικεύεται στην αξιολόγηση και αποκατάσταση των ανώτερων νοητικών λειτουργιών σε άτομα με νευροεκφυλιστικά νοσήματα, όπως η νόσος Alzheimer, η Μετωποκροταφική Εκφύλιση, η νόσος Πάρκινσον, το φλοιοβασικό σύνδρομο και η Προϊούσα Υπερπυρηνική Παράλυση. Παράλληλα, παρέχει υπηρεσίες προληπτικού νευροψυχολογικού ελέγχου και προγράμματα νοητικής ενδυνάμωσης, με στόχο τη διατήρηση των νοητικών λειτουργιών και της ποιότητας ζωής. Σημαντικό μέρος της κλινικής της εργασίας αποτελεί και η υποστήριξη φροντιστών ατόμων με νευροεκφυλιστικά νοσήματα, μέσα από συνεδρίες γνωσιακής-συμπεριφοριστικής ψυχοθεραπείας, που στοχεύουν στην κατανόηση της νόσου, τη διαχείριση της καθημερινότητας και τη μείωση της ψυχικής επιβάρυνσης.</p>
+            <p>Η θεραπευτική της πρακτική βασίζεται στη δημιουργία μιας ασφαλούς και συνεργατικής σχέσης, όπου κάθε άνθρωπος μπορεί να νιώσει κατανόηση, αποδοχή και ουσιαστική υποστήριξη, με στόχο τη σταδιακή και σταθερή αλλαγή.</p>
+        </div>
+        <div id="cv-anka">
+            <p>Η Άνκα Δαβίλα, είναι Ψυχολόγος – Νευροψυχολόγος και Ψυχοθεραπεύτρια με εμπειρία σε θεραπευτικά, ερευνητικά και κλινικά πλαίσια, συμπεριλαμβανομένων δομών ημερήσιας φροντίδας. Έχει σπουδάσει Ψυχολογία και έχει ολοκληρώσει μεταπτυχιακές σπουδές στη «Γνωστική Ψυχολογία και Νευροψυχολογία» στο Πανεπιστήμιο του Kent στην Αγγλία, ενώ έχει εκπαιδευτεί στη Γνωσιακή Συμπεριφοριστική Θεραπεία στο Ινστιτούτο Έρευνας και Θεραπείας της Συμπεριφοράς.</p>
+            <p>Η επαγγελματική της δραστηριότητα περιλαμβάνει την ψυχοθεραπευτική της εργασία, καθώς και τη δραστηριοποίησή της στον τομέα της νευροψυχολογίας, με εμπειρία σε διαφορετικά κλινικά πλαίσια. Εργάζεται ως ψυχοθεραπεύτρια, ενώ παράλληλα έχει εξειδικευτεί στη νευροψυχολογική αξιολόγηση και υποστήριξη ατόμων με γνωστικές διαταραχές μέσα από τη συνεργασία της με εξειδικευμένες δομές. Συγκεκριμένα, έχει εργαστεί ως νευροψυχολόγος στο Κέντρο Ημερήσιας Φροντίδας Ηλικιωμένων (ΚΗΦΗ) του Δήμου Σπατών-Αρτέμιδος και στον Συμβουλευτικό Σταθμό για την Άνοια στο Ίλιον της Εταιρείας Alzheimer Αθηνών, όπου παρείχε νευροψυχολογική αξιολόγηση, ψυχοκοινωνικές παρεμβάσεις και υποστήριξη τόσο σε άτομα με γνωστικές δυσκολίες όσο και στους φροντιστές τους.</p>
+            <p>Παράλληλα, έχει συμμετάσχει ως βοηθός έρευνας σε ευρωπαϊκά ερευνητικά προγράμματα Erasmus+, όπως τα «IntegraCare» και «EARLYDEM», τα οποία επικεντρώνονται στη βελτίωση της φροντίδας ατόμων με άνοια και στην εκπαίδευση επαγγελματιών υγείας και φροντιστών. Μέσα από τη συμμετοχή της, συνέβαλε στη συλλογή και ανάλυση δεδομένων, στην ανάπτυξη εκπαιδευτικού υλικού και στη συνεργασία με διεπιστημονικές ομάδες σε ευρωπαϊκό επίπεδο.</p>
+            <p>Στην εργασία της δίνει έμφαση στη δημιουργία ενός ασφαλούς και υποστηρικτικού πλαισίου, συνδυάζοντας τη θεραπευτική σχέση με επιστημονικά τεκμηριωμένες μεθόδους, με στόχο την κατανόηση των δυσκολιών, την ενίσχυση της αυτογνωσίας και τη βελτίωση της ποιότητας ζωής.</p>
+        </div>
+    </div>
+
     <script>
-        // 1. Initialize Icons
         lucide.createIcons();
 
-        // 2. Mobile Menu
         const mobileBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileLinks = document.querySelectorAll('.mobile-link');
@@ -679,7 +737,6 @@
             });
         });
 
-        // 3. Navbar scroll effect
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
@@ -691,7 +748,6 @@
             }
         });
 
-        // 4. Scroll Reveal
         const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -703,7 +759,7 @@
         }, observerOptions);
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // 5. Lightbox
+        // Lightbox
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
 
@@ -719,28 +775,71 @@
                 document.body.style.overflow = '';
             }, 500);
         }
+
+        // CV Modal Logic
+        const cvModal = document.getElementById('cv-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalSubtitle = document.getElementById('modal-subtitle');
+        const modalBody = document.getElementById('modal-body');
+
+        const teamData = {
+            'cv-dionysia': {
+                name: 'Διονυσία Κονταξοπούλου',
+                role: 'Ψυχολόγος – Νευροψυχολόγος & Ψυχοθεραπεύτρια'
+            },
+            'cv-kalliopi': {
+                name: 'Καλλιόπη Βούρου',
+                role: 'Ψυχολόγος – Νευροψυχολόγος & Ψυχοθεραπεύτρια'
+            },
+            'cv-eva': {
+                name: 'Εύα Σμαραγδάκη',
+                role: 'Κλινική Νευροψυχολόγος & CBT Ψυχοθεραπεύτρια'
+            },
+            'cv-anka': {
+                name: 'Άνκα Δαβίλα',
+                role: 'Ψυχολόγος – Νευροψυχολόγος & Ψυχοθεραπεύτρια'
+            }
+        };
+
+        function openCvModal(id) {
+            const dataHtml = document.getElementById(id).innerHTML;
+            modalTitle.textContent = teamData[id].name;
+            modalSubtitle.textContent = teamData[id].role;
+            modalBody.innerHTML = dataHtml;
+            cvModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCvModal() {
+            cvModal.classList.remove('active');
+            setTimeout(() => {
+                document.body.style.overflow = '';
+            }, 400);
+        }
+
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
+            if (e.key === 'Escape') {
+                if (lightbox.classList.contains('active')) closeLightbox();
+                if (cvModal.classList.contains('active')) closeCvModal();
+            }
         });
 
-        // 6. Interactive Hero Gradient Wow Factor
         const heroSection = document.querySelector('section');
         const gradientOverlay = document.getElementById('hero-gradient');
         
-        if(window.innerWidth > 1024) { // Only on desktop
+        if(window.innerWidth > 1024) { 
             heroSection.addEventListener('mousemove', (e) => {
                 const rect = heroSection.getBoundingClientRect();
                 const x = ((e.clientX - rect.left) / rect.width) * 100;
                 const y = ((e.clientY - rect.top) / rect.height) * 100;
-                gradientOverlay.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(18, 28, 38, 0.2) 0%, rgba(18, 28, 38, 0.6) 100%)`;
+                gradientOverlay.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(18, 28, 38, 0.2) 0%, rgba(18, 28, 38, 0.7) 100%)`;
             });
             
             heroSection.addEventListener('mouseleave', () => {
-                gradientOverlay.style.background = `radial-gradient(circle at center, rgba(18, 28, 38, 0.2) 0%, rgba(18, 28, 38, 0.6) 100%)`;
+                gradientOverlay.style.background = `radial-gradient(circle at center, rgba(18, 28, 38, 0.2) 0%, rgba(18, 28, 38, 0.7) 100%)`;
             });
         }
 
-        // 7. Reviews Data Injection
         const reviews = [
             { name: "ΜΥΡΤΩ", score: "10.0", date: "06 Νοεμβρίου 2025", revs: "3", text: "Η Διονυσία είναι εξαιρετική επαγγελματίας και άνθρωπος! Είναι η ψυχολόγος μου πάνω από 1 χρόνο, με έχει βοηθήσει πολύ, εμπνέοντάς μου ασφάλεια." },
             { name: "Μάλαμα", score: "10.0", date: "28 Οκτωβρίου 2025", revs: "3", text: "Γλυκός άνθρωπος, προσιτός αλλά συνάμα επαγγελματίας που δημιουργεί ένα ασφαλές πλαίσιο για να εκράζεις όποιον προβληματισμό ή σκέψη σου." },
@@ -784,7 +883,7 @@
         track1.innerHTML = htmlStr;
         track2.innerHTML = htmlStr;
 
-        lucide.createIcons(); // re-init for newly added icons
+        lucide.createIcons(); 
     </script>
 </body>
 </html>
