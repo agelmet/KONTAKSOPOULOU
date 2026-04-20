@@ -39,6 +39,7 @@
                         'lux': '0 20px 40px -15px rgba(18, 28, 38, 0.08)',
                         'float': '0 30px 60px -20px rgba(18, 28, 38, 0.15)',
                         'glass': '0 8px 32px 0 rgba(18, 28, 38, 0.05)',
+                        'logo': '0 10px 30px -5px rgba(18, 28, 38, 0.2)',
                     },
                     animation: {
                         'float': 'float 8s ease-in-out infinite',
@@ -46,6 +47,7 @@
                         'marquee': 'marquee 60s linear infinite',
                         'kenburns': 'kenburns 30s ease-out both',
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'reveal-text': 'revealText 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards',
                     },
                     keyframes: {
                         float: {
@@ -59,6 +61,10 @@
                         kenburns: {
                             '0%': { transform: 'scale(1.1)' },
                             '100%': { transform: 'scale(1)' },
+                        },
+                        revealText: {
+                            '0%': { transform: 'translateY(100%)', opacity: 0 },
+                            '100%': { transform: 'translateY(0)', opacity: 1 },
                         }
                     }
                 }
@@ -127,6 +133,47 @@
             background: linear-gradient(to bottom, transparent, #D9D0C7, transparent);
             margin: 0 auto;
         }
+
+        /* Services Wow Accordion */
+        .service-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+            opacity: 0;
+        }
+        .service-card:hover .service-details {
+            max-height: 200px; /* Adjust based on content */
+            opacity: 1;
+            margin-top: 1rem;
+        }
+        .service-card {
+            transition: background-color 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
+        }
+        .service-card:hover {
+            background-color: #FFFFFF;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -15px rgba(18, 28, 38, 0.05);
+        }
+        
+        /* Hero Wow factors */
+        .hero-title-part {
+            display: inline-block;
+            opacity: 0;
+            animation: revealText 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+        .hero-title-part:nth-child(1) { animation-delay: 0.2s; }
+        .hero-title-part:nth-child(2) { animation-delay: 0.4s; }
+        .hero-title-part:nth-child(3) { animation-delay: 0.6s; }
+
+        /* Interactive gradient overlay for Hero */
+        #hero-gradient {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(18, 28, 38, 0.4) 100%);
+            z-index: 15;
+            pointer-events: none;
+            transition: background 0.3s ease;
+        }
     </style>
 
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -137,10 +184,10 @@
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             
             <a href="#" class="group relative inline-block">
-                <div class="absolute -inset-2 bg-brand-sand/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition duration-700 animate-pulse-slow"></div>
+                <div class="absolute -inset-1 bg-brand-sand/10 rounded-sm blur-sm opacity-0 group-hover:opacity-100 transition duration-700"></div>
                 <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0057.jpg" 
                      alt="Logo" 
-                     class="relative h-16 w-16 object-cover rounded-full shadow-lg border-2 border-white transform transition-transform duration-700 group-hover:scale-105 group-hover:shadow-float">
+                     class="relative h-14 w-14 object-contain rounded-sm shadow-logo border border-white/50 transform transition-transform duration-700 group-hover:scale-105">
             </a>
 
             <div class="hidden lg:flex items-center space-x-10">
@@ -170,26 +217,32 @@
         </div>
     </nav>
 
-    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+    <section class="relative h-screen flex items-center justify-center overflow-hidden bg-brand-navy">
         <div class="absolute inset-0 z-0">
-            <div class="w-full h-full bg-cover bg-center animate-kenburns scale-105" style="background-image: url('https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0085.jpg');"></div>
+            <div class="w-full h-full bg-cover bg-center animate-kenburns scale-105 grayscale-[30%] opacity-80" style="background-image: url('https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0085.jpg');"></div>
         </div>
         
-        <div class="absolute inset-0 bg-gradient-to-b from-brand-navy/60 via-brand-navy/40 to-brand-navy/80 z-10"></div>
+        <div id="hero-gradient"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-brand-navy/70 via-transparent to-brand-navy/90 z-10"></div>
 
-        <div class="relative z-20 text-center px-6 max-w-5xl mx-auto mt-20">
-            <div class="reveal">
-                <span class="block text-brand-sand text-xs md:text-sm uppercase tracking-[0.3em] font-semibold mb-6">Ασφαλές Πλαίσιο Αποδοχής</span>
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif text-white leading-tight mb-8 text-balance drop-shadow-2xl">
-                    Επούλωση, Εξέλιξη & <br><span class="italic text-brand-sand">Ψυχική Ισορροπία</span>
+        <div class="relative z-20 text-center px-6 max-w-6xl mx-auto mt-20">
+            <div>
+                <span class="block text-brand-sand text-xs md:text-sm uppercase tracking-[0.4em] font-medium mb-8 opacity-0 animate-reveal-text" style="animation-delay: 0.1s">Ασφαλές Πλαίσιο Αποδοχής & Εμπιστοσύνης</span>
+                
+                <h1 class="text-6xl md:text-7xl lg:text-9xl font-serif text-white leading-[1.1] mb-12 text-balance drop-shadow-2xl">
+                    <span class="hero-title-part">Επούλωση,</span> <br>
+                    <span class="hero-title-part">Εξέλιξη &</span> <br>
+                    <span class="hero-title-part italic text-brand-sand">Ψυχική Ισορροπία</span>
                 </h1>
                 
-                <div class="lux-line mb-8 bg-white/20"></div>
+                <div class="lux-line mb-12 bg-white/20 opacity-0 animate-reveal-text" style="animation-delay: 1s"></div>
 
-                <a href="#contact" class="inline-flex items-center justify-center px-10 py-5 bg-transparent border border-brand-sand/50 text-white text-sm uppercase tracking-widest-lux hover:bg-brand-sand hover:text-brand-navy transition-all duration-500 backdrop-blur-sm group">
-                    Κλείστε Ραντεβού
-                    <i data-lucide="arrow-right" class="w-4 h-4 ml-3 group-hover:translate-x-2 transition-transform"></i>
-                </a>
+                <div class="opacity-0 animate-reveal-text" style="animation-delay: 1.2s">
+                    <a href="#contact" class="inline-flex items-center justify-center px-12 py-5 bg-transparent border border-brand-sand/40 text-white text-sm uppercase tracking-widest-lux hover:bg-brand-sand hover:text-brand-navy hover:border-brand-sand transition-all duration-500 backdrop-blur-sm group">
+                        Κλείστε Ραντεβού
+                        <i data-lucide="arrow-right" class="w-4 h-4 ml-3 group-hover:translate-x-2 transition-transform"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -198,14 +251,16 @@
         <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
             
             <div class="relative reveal">
-                <div class="img-wrap shadow-float">
-                    <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0057.jpg" alt="Ψυχική Υγεία" class="w-full h-[600px] object-cover object-center grayscale-[20%]">
+                <div class="img-wrap shadow-float bg-white p-4">
+                    <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0057.jpg" alt="Ψυχική Υγεία" class="w-full h-auto object-containgrayscale-[20%]">
                 </div>
                 <div class="absolute -bottom-8 -right-8 w-64 h-64 border border-brand-sand z-[-1]"></div>
             </div>
 
-            <div class="reveal delay-200">
-                <h2 class="text-4xl md:text-5xl font-serif text-brand-navy mb-8 leading-tight">Η φροντίδα της ψυχικής υγείας αποτελεί το θεμέλιο της συνολικής μας ευεξίας.</h2>
+            <div class="reveal delay-200 space-y-8">
+                <span class="text-brand-dust text-xs uppercase tracking-widest-lux font-semibold">Η Προσέγγιση Μας</span>
+                <h2 class="text-4xl md:text-5xl font-serif text-brand-navy leading-tight text-balance">Η φροντίδα της ψυχικής υγείας αποτελεί το θεμέλιο της συνολικής μας ευεξίας.</h2>
+                <div class="w-16 h-px bg-brand-sand mb-10"></div>
                 <div class="space-y-6 text-lg text-brand-dust font-light leading-relaxed">
                     <p>
                         Στον χώρο μας, πιστεύουμε ότι κάθε άνθρωπος έχει τη δυνατότητα να εξελιχθεί και να ξεπεράσει τα εμπόδια που περιορίζουν την καθημερινότητά του. 
@@ -221,202 +276,208 @@
         </div>
     </section>
 
-    <section class="py-32 px-6 bg-white relative">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20 reveal">
-                <span class="text-brand-dust text-xs uppercase tracking-widest-lux font-semibold">Η Φιλοσοφια Μας</span>
-                <h2 class="text-4xl md:text-5xl font-serif text-brand-navy mt-4 mb-6">Γιατί να μας εμπιστευτείτε</h2>
+    <section id="team" class="py-32 bg-white px-6">
+        <div class="max-w-7xl mx-auto space-y-32">
+            
+            <div class="text-center mb-24 reveal">
+                <span class="text-brand-dust text-xs uppercase tracking-widest-lux font-semibold">Οι Ειδικοί Μας</span>
+                <h2 class="text-4xl md:text-5xl font-serif text-brand-navy mt-4 mb-6">Επιστημονική Ομάδα</h2>
                 <div class="w-16 h-px bg-brand-sand mx-auto"></div>
             </div>
 
-            <div class="grid lg:grid-cols-2 gap-20 items-center">
-                <div class="space-y-12 reveal delay-100">
-                    <p class="text-xl text-brand-navy font-serif italic border-l-2 border-brand-sand pl-6">
-                        Η θεραπευτική μας πρακτική δεν βασίζεται μόνο στην ενσυναίσθηση, αλλά θεμελιώνεται στην πολυετή κλινική εμπειρία, τη συνεχή ακαδημαϊκή έρευνα και την εξειδίκευση.
-                    </p>
-                    
-                    <div class="space-y-8">
-                        <div class="flex gap-4">
-                            <div class="mt-1"><i data-lucide="book-open" class="w-6 h-6 text-brand-sand"></i></div>
-                            <div>
-                                <h4 class="text-lg font-bold text-brand-navy mb-2">Υψηλή Ακαδημαϊκή Κατάρτιση & Έρευνα</h4>
-                                <p class="text-brand-dust text-sm leading-relaxed">Διδακτορικοί και μεταπτυχιακοί τίτλοι από κορυφαία ιδρύματα (ΕΚΠΑ, McGill, Kent), με ενεργή συμμετοχή σε έρευνα και διδασκαλία.</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4">
-                            <div class="mt-1"><i data-lucide="building-2" class="w-6 h-6 text-brand-sand"></i></div>
-                            <div>
-                                <h4 class="text-lg font-bold text-brand-navy mb-2">Εκτενής Κλινική Εμπειρία</h4>
-                                <p class="text-brand-dust text-sm leading-relaxed">Πολυετής συνεργασία με κορυφαία νοσοκομεία (Α' Νευρολογική Αιγινητείου, «Αττικόν») για την ασφαλή διαχείριση σύνθετων περιστατικών.</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4">
-                            <div class="mt-1"><i data-lucide="microscope" class="w-6 h-6 text-brand-sand"></i></div>
-                            <div>
-                                <h4 class="text-lg font-bold text-brand-navy mb-2">Επιστημονικά Τεκμηριωμένες Προσεγγίσεις</h4>
-                                <p class="text-brand-dust text-sm leading-relaxed">Εφαρμογή μεθόδων με αποδεδειγμένη κλινική αποτελεσματικότητα (CBT, DBT, Συστημική, EMDR).</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4">
-                            <div class="mt-1"><i data-lucide="network" class="w-6 h-6 text-brand-sand"></i></div>
-                            <div>
-                                <h4 class="text-lg font-bold text-brand-navy mb-2">Ολιστική & Διεπιστημονική Ματιά</h4>
-                                <p class="text-brand-dust text-sm leading-relaxed">Συνδυασμός κλινικής ψυχολογίας και νευροεπιστημών για την κάλυψη όλου του φάσματος φροντίδας και λειτουργικότητας.</p>
-                            </div>
-                        </div>
+            <div class="grid lg:grid-cols-12 gap-16 items-center reveal">
+                <div class="lg:col-span-5 flex justify-center lg:justify-end">
+                    <div class="bg-brand-pearl p-6 shadow-lux border border-brand-sand/20">
+                        <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0030.jpg" alt="Διονυσία Κονταξοπούλου" class="w-auto h-auto max-w-full max-h-[500px] object-contain">
                     </div>
                 </div>
-
-                <div class="relative reveal delay-300">
-                    <div class="img-wrap shadow-lux aspect-[3/4]">
-                        <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0062.jpg" alt="Ο χώρος μας" class="w-full h-full object-cover">
+                <div class="lg:col-span-7 space-y-6">
+                    <h3 class="text-4xl font-serif text-brand-navy">Διονυσία Κονταξοπούλου</h3>
+                    <p class="text-sm font-semibold tracking-widest-lux text-brand-dust uppercase pb-4 border-b border-brand-pearl">Ψυχολόγος – Νευροψυχολόγος & Ψυχοθεραπεύτρια</p>
+                    <div class="text-brand-dust font-light leading-relaxed space-y-4 text-sm md:text-base">
+                        <p>Η Διονυσία Κονταξοπούλου διαθέτει εκτενή εμπειρία στην κλινική πράξη, την έρευνα και την πανεπιστημιακή διδασκαλία. Ολοκλήρωσε τις σπουδές της στο ΕΚΠΑ και αποφοίτησε με Άριστα από το μεταπτυχιακό «Κλινική Νευροψυχολογία» (Ιατρική Σχολή ΕΚΠΑ & Univ. of Texas). Η διδακτορική της διατριβή εκπονήθηκε στη Β΄ Νευρολογική Κλινική του Αττικού Νοσοκομείου με Άριστα.</p>
+                        <p>Η θεραπευτική της προσέγγιση βασίζεται στη Γνωσιακή-Συμπεριφοριστική Θεραπεία (CBT) και είναι εκπαιδευμένη στη Διαλεκτική Συμπεριφοριστική Θεραπεία (DBT). Από το 2020 εργάζεται ως μεταδιδακτορική ερευνήτρια στην Α’ Νευρολογική Κλινική του Αιγινητείου Νοσοκομείου.</p>
+                        <p>Διαθέτει πολυάριθμες δημοσιεύσεις, διδάσκει στο Ελληνικό Ανοικτό Πανεπιστήμιο και έχει μετεκπαιδευτεί σε Mindfulness-Based Cognitive Therapy (MBCT) και ACT.</p>
                     </div>
                 </div>
             </div>
+
+            <div class="grid lg:grid-cols-12 gap-16 items-center reveal reversed-layout">
+                <div class="lg:col-span-5 lg:order-2 flex justify-center lg:justify-start">
+                    <div class="bg-brand-pearl p-6 shadow-lux border border-brand-sand/20">
+                        <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0011.jpg" alt="Καλλιόπη Βούρου" class="w-auto h-auto max-w-full max-h-[500px] object-contain">
+                    </div>
+                </div>
+                <div class="lg:col-span-7 lg:order-1 space-y-6 text-left lg:text-right flex flex-col items-start lg:items-end">
+                    <h3 class="text-4xl font-serif text-brand-navy">Καλλιόπη Βούρου</h3>
+                    <p class="text-sm font-semibold tracking-widest-lux text-brand-dust uppercase pb-4 border-b border-brand-pearl w-full lg:w-auto">Ψυχολόγος – Νευροψυχολόγος & Ψυχοθεραπεύτρια</p>
+                    <div class="text-brand-dust font-light leading-relaxed space-y-4 text-sm md:text-base">
+                        <p>Απόφοιτος του Τμήματος Ψυχολογίας του ΕΚΠΑ και κάτοχος Μεταπτυχιακού στην «Κλινική Νευροψυχολογία & Νοητικές Νευροεπιστήμες» (ΕΚΠΑ - McGill University). Έχει πραγματοποιήσει μετεκπαιδεύσεις σε πανεπιστημιακά ιδρύματα της Γαλλίας (Paris Cité, Strasbourg).</p>
+                        <p>Η θεραπευτική της προσέγγιση βασίζεται στη Συστημική Ψυχοθεραπεία και την Τραυματοθεραπεία EMDR. Παρέχει υπηρεσίες σε ενήλικες, ζευγάρια, παιδιά και εφήβους, ενώ εξειδικεύεται στη νοητική ενδυνάμωση ατόμων με άνοια.</p>
+                        <p>Από το 2020 συνεργάζεται με την Α’ Νευρολογική Κλινική του Αιγινητείου, εκπονώντας διδακτορική διατριβή για τη μουσική αντίληψη στα νευροεκφυλιστικά νοσήματα.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-16 items-center reveal">
+                <div class="lg:col-span-5 flex justify-center lg:justify-end">
+                    <div class="bg-brand-pearl p-6 shadow-lux border border-brand-sand/20">
+                        <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0028.jpg" alt="Εύα Σμαραγδάκη" class="w-auto h-auto max-w-full max-h-[500px] object-contain">
+                    </div>
+                </div>
+                <div class="lg:col-span-7 space-y-6">
+                    <h3 class="text-4xl font-serif text-brand-navy">Εύα Σμαραγδάκη</h3>
+                    <p class="text-sm font-semibold tracking-widest-lux text-brand-dust uppercase pb-4 border-b border-brand-pearl">Κλινική Νευροψυχολόγος & CBT Ψυχοθεραπεύτρια</p>
+                    <div class="text-brand-dust font-light leading-relaxed space-y-4 text-sm md:text-base">
+                        <p>Υποψήφια διδάκτωρ της Ιατρικής Σχολής Αθηνών (Α’ Νευρολογική Κλινική, Αιγινήτειο). Αποφοίτησε με Άριστα από την Ψυχολογία ΕΚΠΑ και ολοκλήρωσε πρώτη σε κατάταξη το μεταπτυχιακό πρόγραμμα στην Κλινική Νευροψυχολογία (ΕΚΠΑ & McGill University).</p>
+                        <p>Η προσέγγισή της βασίζεται στη Γνωσιακή-Συμπεριφοριστική Θεραπεία (CBT), εργαζόμενη με άγχος, κρίσεις πανικού, OCD και δυσκολίες διαπροσωπικών σχέσεων. Εξειδικεύεται στην αξιολόγηση και αποκατάσταση νοητικών λειτουργιών σε άτομα με νευροεκφυλιστικά νοσήματα (Alzheimer, Πάρκινσον).</p>
+                        <p>Εστιάζει στη δημιουργία συνεργατικής σχέσης, υποστηρίζοντας τόσο τους ασθενείς όσο και τους φροντιστές τους προς τη βελτίωση της ποιότητας ζωής.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-16 items-center reveal reversed-layout">
+                <div class="lg:col-span-5 lg:order-2 flex justify-center lg:justify-start">
+                    <div class="bg-brand-pearl p-6 shadow-lux border border-brand-sand/20">
+                        <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0045.jpg" alt="Άνκα Δαβίλα" class="w-auto h-auto max-w-full max-h-[500px] object-contain">
+                    </div>
+                </div>
+                <div class="lg:col-span-7 lg:order-1 space-y-6 text-left lg:text-right flex flex-col items-start lg:items-end">
+                    <h3 class="text-4xl font-serif text-brand-navy">Άνκα Δαβίλα</h3>
+                    <p class="text-sm font-semibold tracking-widest-lux text-brand-dust uppercase pb-4 border-b border-brand-pearl w-full lg:w-auto">Ψυχολόγος – Νευροψυχολόγος & Ψυχοθεραπεύτρια</p>
+                    <div class="text-brand-dust font-light leading-relaxed space-y-4 text-sm md:text-base">
+                        <p>Ολοκλήρωσε μεταπτυχιακές σπουδές στη «Γνωστική Ψυχολογία και Νευροψυχολογία» στο Πανεπιστήμιο του Kent στην Αγγλία και έχει εκπαιδευτεί στη Γνωσιακή Συμπεριφοριστική Θεραπεία.</p>
+                        <p>Εργάζεται ως ψυχοθεραπεύτρια, εξειδικευμένη στη νευροψυχολογική αξιολόγηση και υποστήριξη ατόμων με γνωστικές διαταραχές. Έχει εργαστεί σε εξειδικευμένες δομές όπως το Κέντρο Ημερήσιας Φροντίδας Ηλικιωμένων (ΚΗΦΗ) και ο Συμβουλευτικός Σταθμός για την Άνοια.</p>
+                        <p>Έχει συμμετάσχει ως βοηθός έρευνας σε ευρωπαϊκά προγράμματα (IntegraCare, EARLYDEM), με γνώμονα πάντα τη δημιουργία ενός ασφαλούς και υποστηρικτικού πλαισίου για τον θεραπευόμενο.</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <section id="team" class="py-32 bg-brand-navy text-white relative">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-24 reveal">
-                <span class="text-brand-sand text-xs uppercase tracking-widest-lux font-semibold">Οι Ειδικοι Μας</span>
-                <h2 class="text-4xl md:text-5xl font-serif mt-4 mb-6">Επιστημονική Ομάδα</h2>
-                <div class="w-16 h-px bg-brand-sand/50 mx-auto"></div>
-            </div>
-
-            <div class="space-y-32">
-                <div class="grid lg:grid-cols-12 gap-12 items-start reveal">
-                    <div class="lg:col-span-5 relative">
-                        <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0030.jpg" alt="Διονυσία Κονταξοπούλου" class="w-full max-w-md mx-auto object-cover shadow-float animate-float border border-white/10">
-                    </div>
-                    <div class="lg:col-span-7 space-y-6">
-                        <h3 class="text-3xl font-serif text-brand-sand">Διονυσία Κονταξοπούλου</h3>
-                        <p class="text-sm font-semibold tracking-widest text-white/50 uppercase">Ψυχολόγος – Νευροψυχολόγος & Ψυχοθεραπεύτρια</p>
-                        <div class="text-white/80 font-light leading-relaxed space-y-4 text-sm md:text-base">
-                            <p>Η Διονυσία Κονταξοπούλου διαθέτει εκτενή εμπειρία στην κλινική πράξη, την έρευνα και την πανεπιστημιακή διδασκαλία. Ολοκλήρωσε τις σπουδές της στο ΕΚΠΑ και αποφοίτησε με Άριστα από το μεταπτυχιακό «Κλινική Νευροψυχολογία» (Ιατρική Σχολή ΕΚΠΑ & Univ. of Texas). Η διδακτορική της διατριβή εκπονήθηκε στη Β΄ Νευρολογική Κλινική του Αττικού Νοσοκομείου με Άριστα.</p>
-                            <p>Η θεραπευτική της προσέγγιση βασίζεται στη Γνωσιακή-Συμπεριφοριστική Θεραπεία (CBT) και είναι εκπαιδευμένη στη Διαλεκτική Συμπεριφοριστική Θεραπεία (DBT). Από το 2020 εργάζεται ως μεταδιδακτορική ερευνήτρια στην Α’ Νευρολογική Κλινική του Αιγινητείου Νοσοκομείου.</p>
-                            <p>Διαθέτει πολυάριθμες δημοσιεύσεις, διδάσκει στο Ελληνικό Ανοικτό Πανεπιστήμιο και έχει μετεκπαιδευτεί σε Mindfulness-Based Cognitive Therapy (MBCT) και ACT.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid lg:grid-cols-12 gap-12 items-start reveal">
-                    <div class="lg:col-span-5 lg:order-2 relative">
-                        <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0011.jpg" alt="Καλλιόπη Βούρου" class="w-full max-w-md mx-auto object-cover shadow-float animate-float-delayed border border-white/10">
-                    </div>
-                    <div class="lg:col-span-7 lg:order-1 space-y-6 text-left lg:text-right">
-                        <h3 class="text-3xl font-serif text-brand-sand">Καλλιόπη Βούρου</h3>
-                        <p class="text-sm font-semibold tracking-widest text-white/50 uppercase">Ψυχολόγος – Νευροψυχολόγος & Ψυχοθεραπεύτρια</p>
-                        <div class="text-white/80 font-light leading-relaxed space-y-4 text-sm md:text-base">
-                            <p>Απόφοιτος του Τμήματος Ψυχολογίας του ΕΚΠΑ και κάτοχος Μεταπτυχιακού στην «Κλινική Νευροψυχολογία & Νοητικές Νευροεπιστήμες» (ΕΚΠΑ - McGill University). Έχει πραγματοποιήσει μετεκπαιδεύσεις σε πανεπιστημιακά ιδρύματα της Γαλλίας (Paris Cité, Strasbourg).</p>
-                            <p>Η θεραπευτική της προσέγγιση βασίζεται στη Συστημική Ψυχοθεραπεία και την Τραυματοθεραπεία EMDR. Παρέχει υπηρεσίες σε ενήλικες, ζευγάρια, παιδιά και εφήβους, ενώ εξειδικεύεται στη νοητική ενδυνάμωση ατόμων με άνοια.</p>
-                            <p>Από το 2020 συνεργάζεται με την Α’ Νευρολογική Κλινική του Αιγινητείου, εκπονώντας διδακτορική διατριβή για τη μουσική αντίληψη στα νευροεκφυλιστικά νοσήματα.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid lg:grid-cols-12 gap-12 items-start reveal">
-                    <div class="lg:col-span-5 relative">
-                        <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0028.jpg" alt="Εύα Σμαραγδάκη" class="w-full max-w-md mx-auto object-cover shadow-float animate-float border border-white/10">
-                    </div>
-                    <div class="lg:col-span-7 space-y-6">
-                        <h3 class="text-3xl font-serif text-brand-sand">Εύα Σμαραγδάκη</h3>
-                        <p class="text-sm font-semibold tracking-widest text-white/50 uppercase">Κλινική Νευροψυχολόγος & CBT Ψυχοθεραπεύτρια</p>
-                        <div class="text-white/80 font-light leading-relaxed space-y-4 text-sm md:text-base">
-                            <p>Υποψήφια διδάκτωρ της Ιατρικής Σχολής Αθηνών (Α’ Νευρολογική Κλινική, Αιγινήτειο). Αποφοίτησε με Άριστα από την Ψυχολογία ΕΚΠΑ και ολοκλήρωσε πρώτη σε κατάταξη το μεταπτυχιακό πρόγραμμα στην Κλινική Νευροψυχολογία (ΕΚΠΑ & McGill University).</p>
-                            <p>Η προσέγγισή της βασίζεται στη Γνωσιακή-Συμπεριφοριστική Θεραπεία (CBT), εργαζόμενη με άγχος, κρίσεις πανικού, OCD και δυσκολίες διαπροσωπικών σχέσεων. Εξειδικεύεται στην αξιολόγηση και αποκατάσταση νοητικών λειτουργιών σε άτομα με νευροεκφυλιστικά νοσήματα (Alzheimer, Πάρκινσον).</p>
-                            <p>Εστιάζει στη δημιουργία συνεργατικής σχέσης, υποστηρίζοντας τόσο τους ασθενείς όσο και τους φροντιστές τους προς τη βελτίωση της ποιότητας ζωής.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid lg:grid-cols-12 gap-12 items-start reveal">
-                    <div class="lg:col-span-5 lg:order-2 relative">
-                        <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0045.jpg" alt="Άνκα Δαβίλα" class="w-full max-w-md mx-auto object-cover shadow-float animate-float-delayed border border-white/10">
-                    </div>
-                    <div class="lg:col-span-7 lg:order-1 space-y-6 text-left lg:text-right">
-                        <h3 class="text-3xl font-serif text-brand-sand">Άνκα Δαβίλα</h3>
-                        <p class="text-sm font-semibold tracking-widest text-white/50 uppercase">Ψυχολόγος – Νευροψυχολόγος & Ψυχοθεραπεύτρια</p>
-                        <div class="text-white/80 font-light leading-relaxed space-y-4 text-sm md:text-base">
-                            <p>Ολοκλήρωσε μεταπτυχιακές σπουδές στη «Γνωστική Ψυχολογία και Νευροψυχολογία» στο Πανεπιστήμιο του Kent στην Αγγλία και έχει εκπαιδευτεί στη Γνωσιακή Συμπεριφοριστική Θεραπεία.</p>
-                            <p>Εργάζεται ως ψυχοθεραπεύτρια, εξειδικευμένη στη νευροψυχολογική αξιολόγηση και υποστήριξη ατόμων με γνωστικές διαταραχές. Έχει εργαστεί σε εξειδικευμένες δομές όπως το Κέντρο Ημερήσιας Φροντίδας Ηλικιωμένων (ΚΗΦΗ) και ο Συμβουλευτικός Σταθμός για την Άνοια.</p>
-                            <p>Έχει συμμετάσχει ως βοηθός έρευνας σε ευρωπαϊκά προγράμματα (IntegraCare, EARLYDEM), με γνώμονα πάντα τη δημιουργία ενός ασφαλούς και υποστηρικτικού πλαισίου για τον θεραπευόμενο.</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section id="services" class="py-32 bg-brand-pearl px-6">
+    <section id="services" class="py-32 bg-brand-pearl px-6 overflow-hidden">
         <div class="max-w-7xl mx-auto">
             
             <div class="mb-24 reveal text-center">
-                <span class="text-brand-dust text-xs uppercase tracking-widest-lux font-semibold">Η Προσεγγιση Μας</span>
+                <span class="text-brand-dust text-xs uppercase tracking-widest-lux font-semibold">Η Προσέγγιση Μας</span>
                 <h2 class="text-4xl md:text-5xl font-serif text-brand-navy mt-4 mb-6">Υπηρεσίες & Θεραπείες</h2>
                 <div class="w-16 h-px bg-brand-sand mx-auto"></div>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
+            <div class="space-y-6 mb-24 reveal delay-100">
                 
-                <div class="glass-card p-10 reveal hover:-translate-y-2 transition-transform duration-500 cursor-default">
-                    <i data-lucide="user" class="w-8 h-8 text-brand-slate mb-6"></i>
-                    <h3 class="text-xl font-bold text-brand-navy mb-4">Ατομικές Συνεδρίες</h3>
-                    <p class="text-brand-dust text-sm leading-relaxed">Διαταραχές άγχους, κρίσεις πανικού, OCD, κατάθλιψη, διαχείριση πένθους, διαταραχές προσωπικότητας και σωματόμορφες δυσκολίες.</p>
+                <div class="service-card bg-white/50 border border-brand-sand/10 p-8 cursor-default group">
+                    <div class="flex items-center justify-between gap-6">
+                        <div class="flex items-center gap-6">
+                            <span class="text-4xl font-serif text-brand-sand group-hover:text-brand-dust transition-colors">01</span>
+                            <h3 class="text-2xl font-semibold text-brand-navy group-hover:translate-x-2 transition-transform">Ατομικές Συνεδρίες</h3>
+                        </div>
+                        <i data-lucide="plus" class="w-6 h-6 text-brand-sand group-hover:rotate-90 transition-transform"></i>
+                    </div>
+                    <div class="service-details">
+                        <p class="text-brand-dust text-base font-light leading-relaxed pl-16">Διαταραχές άγχους, κρίσεις πανικού, OCD, κατάθλιψη, διαχείριση πένθους, διαταραχές προσωπικότητας και σωματόμορφες δυσκολίες.</p>
+                    </div>
                 </div>
 
-                <div class="glass-card p-10 reveal delay-100 hover:-translate-y-2 transition-transform duration-500 cursor-default">
-                    <i data-lucide="monitor" class="w-8 h-8 text-brand-slate mb-6"></i>
-                    <h3 class="text-xl font-bold text-brand-navy mb-4">Online Συνεδρίες</h3>
-                    <p class="text-brand-dust text-sm leading-relaxed">Εξ αποστάσεως υποστήριξη για όσους δυσκολεύονται να παρευρεθούν δια ζώσης, εξασφαλίζοντας σταθερότητα στη θεραπεία.</p>
+                <div class="service-card bg-white/50 border border-brand-sand/10 p-8 cursor-default group">
+                    <div class="flex items-center justify-between gap-6">
+                        <div class="flex items-center gap-6">
+                            <span class="text-4xl font-serif text-brand-sand group-hover:text-brand-dust transition-colors">02</span>
+                            <h3 class="text-2xl font-semibold text-brand-navy group-hover:translate-x-2 transition-transform">Online Συνεδρίες</h3>
+                        </div>
+                        <i data-lucide="plus" class="w-6 h-6 text-brand-sand group-hover:rotate-90 transition-transform"></i>
+                    </div>
+                    <div class="service-details">
+                        <p class="text-brand-dust text-base font-light leading-relaxed pl-16">Εξ αποστάσεως υποστήριξη για όσους δυσκολεύονται να παρευρεθούν δια ζώσης, εξασφαλίζοντας σταθερότητα στη θεραπεία.</p>
+                    </div>
                 </div>
 
-                <div class="glass-card p-10 reveal delay-200 hover:-translate-y-2 transition-transform duration-500 cursor-default">
-                    <i data-lucide="users" class="w-8 h-8 text-brand-slate mb-6"></i>
-                    <h3 class="text-xl font-bold text-brand-navy mb-4">Ομαδικές Συνεδρίες</h3>
-                    <p class="text-brand-dust text-sm leading-relaxed">Συστημικές παρεμβάσεις και ομάδες DBT για τη ρύθμιση συναισθημάτων και την ενίσχυση της επικοινωνίας.</p>
+                <div class="service-card bg-white/50 border border-brand-sand/10 p-8 cursor-default group">
+                    <div class="flex items-center justify-between gap-6">
+                        <div class="flex items-center gap-6">
+                            <span class="text-4xl font-serif text-brand-sand group-hover:text-brand-dust transition-colors">03</span>
+                            <h3 class="text-2xl font-semibold text-brand-navy group-hover:translate-x-2 transition-transform">Ομαδικές Συνεδρίες</h3>
+                        </div>
+                        <i data-lucide="plus" class="w-6 h-6 text-brand-sand group-hover:rotate-90 transition-transform"></i>
+                    </div>
+                    <div class="service-details">
+                        <p class="text-brand-dust text-base font-light leading-relaxed pl-16">Συστημικές παρεμβάσεις και ομάδες DBT για τη ρύθμιση συναισθημάτων και την ενίσχυση της επικοινωνίας.</p>
+                    </div>
                 </div>
 
-                <div class="glass-card p-10 reveal hover:-translate-y-2 transition-transform duration-500 cursor-default">
-                    <i data-lucide="brain" class="w-8 h-8 text-brand-slate mb-6"></i>
-                    <h3 class="text-xl font-bold text-brand-navy mb-4">Νευροψυχολογική Αξιολόγηση</h3>
-                    <p class="text-brand-dust text-sm leading-relaxed">Εκτίμηση μνήμης, προσοχής, γλώσσας σε περιπτώσεις άνοιας ή κακώσεων για στοχευμένη αποκατάσταση.</p>
+                <div class="service-card bg-white/50 border border-brand-sand/10 p-8 cursor-default group">
+                    <div class="flex items-center justify-between gap-6">
+                        <div class="flex items-center gap-6">
+                            <span class="text-4xl font-serif text-brand-sand group-hover:text-brand-dust transition-colors">04</span>
+                            <h3 class="text-2xl font-semibold text-brand-navy group-hover:translate-x-2 transition-transform">Νευροψυχολογική Αξιολόγηση</h3>
+                        </div>
+                        <i data-lucide="plus" class="w-6 h-6 text-brand-sand group-hover:rotate-90 transition-transform"></i>
+                    </div>
+                    <div class="service-details">
+                        <p class="text-brand-dust text-base font-light leading-relaxed pl-16">Εκτίμηση μνήμης, προσοχής, γλώσσας σε περιπτώσεις άνοιας ή κακώσεων για στοχευμένη αποκατάσταση.</p>
+                    </div>
                 </div>
 
-                <div class="glass-card p-10 reveal delay-100 hover:-translate-y-2 transition-transform duration-500 cursor-default">
-                    <i data-lucide="puzzle" class="w-8 h-8 text-brand-slate mb-6"></i>
-                    <h3 class="text-xl font-bold text-brand-navy mb-4">Νοητική Ενδυνάμωση</h3>
-                    <p class="text-brand-dust text-sm leading-relaxed">Παρεμβάσεις ενίσχυσης γνωστικών λειτουργιών σε φυσιολογική γήρανση ή νευρολογικές δυσκολίες.</p>
+                <div class="service-card bg-white/50 border border-brand-sand/10 p-8 cursor-default group">
+                    <div class="flex items-center justify-between gap-6">
+                        <div class="flex items-center gap-6">
+                            <span class="text-4xl font-serif text-brand-sand group-hover:text-brand-dust transition-colors">05</span>
+                            <h3 class="text-2xl font-semibold text-brand-navy group-hover:translate-x-2 transition-transform">Νοητική Ενδυνάμωση</h3>
+                        </div>
+                        <i data-lucide="plus" class="w-6 h-6 text-brand-sand group-hover:rotate-90 transition-transform"></i>
+                    </div>
+                    <div class="service-details">
+                        <p class="text-brand-dust text-base font-light leading-relaxed pl-16">Παρεμβάσεις ενίσχυσης γνωστικών λειτουργιών σε φυσιολογική γήρανση ή νευρολογικές δυσκολίες.</p>
+                    </div>
                 </div>
 
-                <div class="glass-card p-10 reveal delay-200 hover:-translate-y-2 transition-transform duration-500 cursor-default">
-                    <i data-lucide="heart-handshake" class="w-8 h-8 text-brand-slate mb-6"></i>
-                    <h3 class="text-xl font-bold text-brand-navy mb-4">Υποστήριξη Γονέων & Εφήβων</h3>
-                    <p class="text-brand-dust text-sm leading-relaxed">Συμβουλευτική για την κατανόηση της συμπεριφοράς, τις αναπτυξιακές ανάγκες και τον γονεϊκό ρόλο.</p>
+                <div class="service-card bg-white/50 border border-brand-sand/10 p-8 cursor-default group">
+                    <div class="flex items-center justify-between gap-6">
+                        <div class="flex items-center gap-6">
+                            <span class="text-4xl font-serif text-brand-sand group-hover:text-brand-dust transition-colors">06</span>
+                            <h3 class="text-2xl font-semibold text-brand-navy group-hover:translate-x-2 transition-transform">Υποστήριξη Γονέων & Εφήβων</h3>
+                        </div>
+                        <i data-lucide="plus" class="w-6 h-6 text-brand-sand group-hover:rotate-90 transition-transform"></i>
+                    </div>
+                    <div class="service-details">
+                        <p class="text-brand-dust text-base font-light leading-relaxed pl-16">Συμβουλευτική για την κατανόηση της συμπεριφοράς, τις αναπτυξιακές ανάγκες και τον γονεϊκό ρόλο.</p>
+                    </div>
                 </div>
 
             </div>
 
-            <div class="bg-white p-12 lg:p-20 shadow-lux reveal">
-                <h3 class="text-3xl font-serif text-brand-navy mb-12 text-center">Ψυχοθεραπευτικές Προσεγγίσεις</h3>
+            <div class="bg-white p-12 lg:p-20 shadow-float reveal delay-200">
+                <h3 class="text-3xl font-serif text-brand-navy mb-16 text-center">Ψυχοθεραπευτικές Προσεγγίσεις</h3>
                 
                 <div class="space-y-12">
-                    <div class="border-b border-brand-pearl pb-8">
-                        <h4 class="text-xl font-bold text-brand-slate mb-4">Γνωσιακή Συμπεριφοριστική Ψυχοθεραπεία (CBT)</h4>
-                        <p class="text-brand-dust leading-relaxed text-sm">Εστιάζει στη δυναμική αλληλεπίδραση σκέψεων, συναισθημάτων και συμπεριφορών. Μέσα από πρακτικές τεχνικές και δομημένη συνεργασία, βοηθά στην τροποποίηση δυσλειτουργικών πεποιθήσεων και στη διαχείριση άγχους, κατάθλιψης και φοβιών.</p>
+                    <div class="flex flex-col md:flex-row gap-6 md:gap-10 border-l-2 border-brand-sand/20 hover:border-brand-sand pl-8 py-2 transition-colors group">
+                        <div class="md:w-1/3 shrink-0 flex items-center gap-3">
+                            <i data-lucide="brain-circuit" class="w-5 h-5 text-brand-sand mt-1 shrink-0"></i>
+                            <h4 class="text-lg font-bold text-brand-slate">Γνωσιακή Συμπεριφοριστική (CBT)</h4>
+                        </div>
+                        <p class="text-brand-dust leading-relaxed text-sm font-light">Εστιάζει στη δυναμική αλληλεπίδραση σκέψεων, συναισθημάτων και συμπεριφορών. Μέσα από πρακτικές τεχνικές και δομημένη συνεργασία, βοηθά στην τροποποίηση δυσλειτουργικών πεποιθήσεων και στη διαχείριση άγχους, κατάθλιψης και φοβιών.</p>
                     </div>
-                    <div class="border-b border-brand-pearl pb-8">
-                        <h4 class="text-xl font-bold text-brand-slate mb-4">Διαλεκτική Συμπεριφορική Ψυχοθεραπεία (DBT)</h4>
-                        <p class="text-brand-dust leading-relaxed text-sm">Αναπτύχθηκε για τη διαχείριση έντονων συναισθημάτων. Εκπαιδεύει στην ενσυνειδητότητα, τη ρύθμιση, την ανοχή στη δυσφορία και την αποτελεσματική επικοινωνία.</p>
+                    <div class="flex flex-col md:flex-row gap-6 md:gap-10 border-l-2 border-brand-sand/20 hover:border-brand-sand pl-8 py-2 transition-colors group">
+                        <div class="md:w-1/3 shrink-0 flex items-center gap-3">
+                            <i data-lucide="balance-sheet" class="w-5 h-5 text-brand-sand mt-1 shrink-0"></i>
+                            <h4 class="text-lg font-bold text-brand-slate">Διαλεκτική Συμπεριφορική (DBT)</h4>
+                        </div>
+                        <p class="text-brand-dust leading-relaxed text-sm font-light">Αναπτύχθηκε για τη διαχείριση έντονων συναισθημάτων. Εκπαιδεύει στην ενσυνειδητότητα, τη ρύθμιση, την ανοχή στη δυσφορία και την αποτελεσματική επικοινωνία.</p>
                     </div>
-                    <div class="border-b border-brand-pearl pb-8">
-                        <h4 class="text-xl font-bold text-brand-slate mb-4">Συστημική Ψυχοθεραπεία</h4>
-                        <p class="text-brand-dust leading-relaxed text-sm">Προσεγγίζει το άτομο ως μέρος ευρύτερων συστημάτων (οικογένεια, σχέσεις). Εστιάζει στα μοτίβα επικοινωνίας και αναζητά πιο λειτουργικούς τρόπους αλληλεπίδρασης.</p>
+                    <div class="flex flex-col md:flex-row gap-6 md:gap-10 border-l-2 border-brand-sand/20 hover:border-brand-sand pl-8 py-2 transition-colors group">
+                        <div class="md:w-1/3 shrink-0 flex items-center gap-3">
+                            <i data-lucide="git-branch" class="w-5 h-5 text-brand-sand mt-1 shrink-0"></i>
+                            <h4 class="text-lg font-bold text-brand-slate">Συστημική Ψυχοθεραπεία</h4>
+                        </div>
+                        <p class="text-brand-dust leading-relaxed text-sm font-light">Προσεγγίζει το άτομο ως μέρος ευρύτερων συστημάτων (οικογένεια, σχέσεις). Εστιάζει στα μοτίβα επικοινωνίας και αναζητά πιο λειτουργικούς τρόπους αλληλεπίδρασης.</p>
                     </div>
-                    <div>
-                        <h4 class="text-xl font-bold text-brand-slate mb-4">Τραυματοθεραπεία EMDR</h4>
-                        <p class="text-brand-dust leading-relaxed text-sm">Μέθοδος βασισμένη στη διμερή διέγερση (π.χ. οφθαλμικές κινήσεις) που διευκολύνει την επεξεργασία τραυματικών αναμνήσεων, μειώνοντας την ένταση και το άγχος.</p>
+                    <div class="flex flex-col md:flex-row gap-6 md:gap-10 border-l-2 border-brand-sand/20 hover:border-brand-sand pl-8 py-2 transition-colors group">
+                        <div class="md:w-1/3 shrink-0 flex items-center gap-3">
+                            <i data-lucide="eye" class="w-5 h-5 text-brand-sand mt-1 shrink-0"></i>
+                            <h4 class="text-lg font-bold text-brand-slate">Τραυματοθεραπεία EMDR</h4>
+                        </div>
+                        <p class="text-brand-dust leading-relaxed text-sm font-light">Μέθοδος βασισμένη στη διμερή διέγερση (π.χ. οφθαλμικές κινήσεις) που διευκολύνει την επεξεργασία τραυματικών αναμνήσεων, μειώνοντας την ένταση και το άγχος.</p>
                     </div>
                 </div>
             </div>
@@ -424,44 +485,104 @@
         </div>
     </section>
 
-    <section id="space" class="py-32 bg-white text-center px-6">
+    <section id="philosophy" class="py-32 px-6 bg-white relative overflow-hidden">
         <div class="max-w-7xl mx-auto">
-            <div class="mb-16 reveal">
-                <h2 class="text-4xl md:text-5xl font-serif text-brand-navy mb-4">Ο Χώρος</h2>
-                <p class="text-brand-dust font-light">Σχεδιασμένος με γνώμονα την ηρεμία και την ιδιωτικότητα.</p>
+            <div class="text-center mb-24 reveal">
+                <span class="text-brand-dust text-xs uppercase tracking-widest-lux font-semibold">Η ΦΙΛΟΣΟΦΙΑ ΜΑΣ</span>
+                <h2 class="text-4xl md:text-5xl font-serif text-brand-navy mt-4 mb-6 leading-tight">Γιατί να μας εμπιστευτείτε</h2>
+                <div class="w-16 h-px bg-brand-sand mx-auto mt-8 mb-10"></div>
+                <p class="text-xl text-brand-navy/80 font-serif italic max-w-3xl mx-auto leading-relaxed">
+                    Η θεραπευτική μας πρακτική δεν βασίζεται μόνο στην ενσυναίσθηση, αλλά θεμελιώνεται στην πολυετή κλινική εμπειρία, τη συνεχή ακαδημαϊκή έρευνα και την εξειδίκευση.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div class="space-y-10 reveal delay-100">
+                    
+                    <div class="bg-brand-pearl p-8 border-l-4 border-brand-sand shadow-sm hover:shadow-lux hover:-translate-y-1 transition-all duration-500 group">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i data-lucide="award" class="w-7 h-7 text-brand-sand shrink-0"></i>
+                            <h4 class="text-xl font-bold text-brand-navy">Υψηλή Ακαδημαϊκή Κατάρτιση & Έρευνα</h4>
+                        </div>
+                        <p class="text-brand-dust text-base font-light leading-relaxed pl-11">Διδακτορικοί και μεταπτυχιακοί τίτλοι από κορυφαία ιδρύματα (ΕΚΠΑ, McGill, Kent), με ενεργή συμμετοχή σε έρευνα και διδασκαλία.</p>
+                    </div>
+
+                    <div class="bg-brand-pearl p-8 border-l-4 border-brand-sand shadow-sm hover:shadow-lux hover:-translate-y-1 transition-all duration-500 group">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i data-lucide="building-2" class="w-7 h-7 text-brand-sand shrink-0"></i>
+                            <h4 class="text-xl font-bold text-brand-navy">Εκτενής Κλινική Εμπειρία</h4>
+                        </div>
+                        <p class="text-brand-dust text-base font-light leading-relaxed pl-11">Πολυετής συνεργασία με κορυφαία νοσοκομεία (Α' Νευρολογική Αιγινητείου, «Αττικόν») για την ασφαλή διαχείριση σύνθετων περιστατικών.</p>
+                    </div>
+
+                    <div class="bg-brand-pearl p-8 border-l-4 border-brand-sand shadow-sm hover:shadow-lux hover:-translate-y-1 transition-all duration-500 group">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i data-lucide="microscope" class="w-7 h-7 text-brand-sand shrink-0"></i>
+                            <h4 class="text-xl font-bold text-brand-navy">Επιστημονικά Τεκμηριωμένες Προσεγγίσεις</h4>
+                        </div>
+                        <p class="text-brand-dust text-base font-light leading-relaxed pl-11">Εφαρμογή μεθόδων με αποδεδειγμένη κλινική αποτελεσματικότητα (CBT, DBT, Συστημική, EMDR).</p>
+                    </div>
+
+                    <div class="bg-brand-pearl p-8 border-l-4 border-brand-sand shadow-sm hover:shadow-lux hover:-translate-y-1 transition-all duration-500 group">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i data-lucide="network" class="w-7 h-7 text-brand-sand shrink-0"></i>
+                            <h4 class="text-xl font-bold text-brand-navy">Ολιστική & Διεπιστημονική Ματιά</h4>
+                        </div>
+                        <p class="text-brand-dust text-base font-light leading-relaxed pl-11">Συνδυασμός κλινικής ψυχολογίας και νευροεπιστημών για την κάλυψη όλου του φάσματος φροντίδας και λειτουργικότητας.</p>
+                    </div>
+
+                </div>
+
+                <div class="relative reveal delay-300">
+                    <div class="p-4 bg-brand-pearl border border-brand-sand/10 shadow-lux">
+                        <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0062.jpg" alt="Η ομάδα μας" class="w-full h-auto object-containgrayscale-[10%]">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="space" class="py-32 bg-brand-pearl border-t border-brand-sand/10 text-center px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-20 reveal">
+                <span class="text-brand-dust text-xs uppercase tracking-widest-lux font-semibold">Περιήγηση</span>
+                <h2 class="text-4xl md:text-5xl font-serif text-brand-navy mt-4 mb-6">Ο Χώρος</h2>
+                <div class="w-16 h-px bg-brand-sand mx-auto mt-6 mb-6"></div>
+                <p class="text-brand-dust font-light max-w-xl mx-auto leading-relaxed">Ένα περιβάλλον σχεδιασμένο με γνώμονα την ηρεμία, την ασφάλεια και την απόλυτη ιδιωτικότητα.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <button class="w-full relative group reveal overflow-hidden shadow-lux cursor-zoom-in" onclick="openLightbox('https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0085.jpg')">
-                    <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0085.jpg" alt="Χώρος" class="w-full h-auto transform group-hover:scale-[1.02] transition-transform duration-700 ease-out">
-                    <div class="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/20 transition-colors duration-500 flex items-center justify-center"></div>
+                <button class="w-full relative group reveal overflow-hidden shadow-lux cursor-zoom-in bg-white p-3" onclick="openLightbox('https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0085.jpg')">
+                    <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0085.jpg" alt="Χώρος" class="w-full h-auto transform group-hover:scale-[1.01] transition-transform duration-700 ease-out object-contain">
+                    <div class="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/10 transition-colors duration-500 flex items-center justify-center"></div>
                 </button>
-                <button class="w-full relative group reveal delay-100 overflow-hidden shadow-lux cursor-zoom-in" onclick="openLightbox('https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0087.jpg')">
-                    <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0087.jpg" alt="Χώρος" class="w-full h-auto transform group-hover:scale-[1.02] transition-transform duration-700 ease-out">
-                    <div class="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/20 transition-colors duration-500 flex items-center justify-center"></div>
+                <button class="w-full relative group reveal delay-100 overflow-hidden shadow-lux cursor-zoom-in bg-white p-3" onclick="openLightbox('https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0087.jpg')">
+                    <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0087.jpg" alt="Χώρος" class="w-full h-auto transform group-hover:scale-[1.01] transition-transform duration-700 ease-out object-contain">
+                    <div class="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/10 transition-colors duration-500 flex items-center justify-center"></div>
                 </button>
-                <button class="w-full relative group reveal overflow-hidden shadow-lux cursor-zoom-in" onclick="openLightbox('https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0089.jpg')">
-                    <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0089.jpg" alt="Χώρος" class="w-full h-auto transform group-hover:scale-[1.02] transition-transform duration-700 ease-out">
-                    <div class="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/20 transition-colors duration-500 flex items-center justify-center"></div>
+                <button class="w-full relative group reveal overflow-hidden shadow-lux cursor-zoom-in bg-white p-3" onclick="openLightbox('https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0089.jpg')">
+                    <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0089.jpg" alt="Χώρος" class="w-full h-auto transform group-hover:scale-[1.01] transition-transform duration-700 ease-out object-contain">
+                    <div class="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/10 transition-colors duration-500 flex items-center justify-center"></div>
                 </button>
-                <button class="w-full relative group reveal delay-100 overflow-hidden shadow-lux cursor-zoom-in" onclick="openLightbox('https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0094.jpg')">
-                    <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0094.jpg" alt="Χώρος" class="w-full h-auto transform group-hover:scale-[1.02] transition-transform duration-700 ease-out">
-                    <div class="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/20 transition-colors duration-500 flex items-center justify-center"></div>
+                <button class="w-full relative group reveal delay-100 overflow-hidden shadow-lux cursor-zoom-in bg-white p-3" onclick="openLightbox('https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0094.jpg')">
+                    <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0094.jpg" alt="Χώρος" class="w-full h-auto transform group-hover:scale-[1.01] transition-transform duration-700 ease-out object-contain">
+                    <div class="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/10 transition-colors duration-500 flex items-center justify-center"></div>
                 </button>
             </div>
         </div>
     </section>
 
     <div id="lightbox" class="fixed inset-0 z-[100] flex items-center justify-center cursor-zoom-out" onclick="closeLightbox()">
-        <img id="lightbox-img" src="" alt="Zoomed View" class="max-w-[90vw] max-h-[90vh] object-contain shadow-2xl cursor-default" onclick="event.stopPropagation()">
+        <img id="lightbox-img" src="" alt="Zoomed View" class="max-w-[95vw] max-h-[95vh] object-contain shadow-2xl cursor-default" onclick="event.stopPropagation()">
         <button class="absolute top-8 right-8 text-white/50 hover:text-white transition-colors">
             <i data-lucide="x" class="w-10 h-10"></i>
         </button>
     </div>
 
-    <section id="reviews" class="py-32 bg-brand-pearl border-t border-gray-200 overflow-hidden">
+    <section id="reviews" class="py-32 bg-brand-pearl overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 mb-16 text-center reveal">
-            <h2 class="text-4xl md:text-5xl font-serif text-brand-navy mb-4">Εμπειρίες Θεραπευόμενων</h2>
+            <span class="text-brand-dust text-xs uppercase tracking-widest-lux font-semibold">Αξιολογήσεις</span>
+            <h2 class="text-4xl md:text-5xl font-serif text-brand-navy mt-4 mb-6">Εμπειρίες Θεραπευόμενων</h2>
             <div class="w-16 h-px bg-brand-sand mx-auto mt-6 mb-6"></div>
         </div>
 
@@ -477,9 +598,9 @@
             </div>
             
             <div class="text-center mt-16 relative z-20">
-                <a href="https://www.doctoranytime.gr/d/Psychologos/dionysia-kontaksopoulou" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-8 py-3 bg-white border border-brand-sand/50 text-xs font-bold uppercase tracking-widest-lux text-brand-navy hover:bg-brand-sand hover:text-white transition-all shadow-sm">
+                <a href="https://www.doctoranytime.gr/d/Psychologos/dionysia-kontaksopoulou" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-10 py-4 bg-white border border-brand-sand/30 text-xs font-bold uppercase tracking-widest-lux text-brand-navy hover:bg-brand-sand hover:text-white hover:border-brand-sand transition-all shadow-sm">
                     Διαβάστε περισσότερα στο 
-                    <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-6 ml-2 object-contain" alt="Doctoranytime">
+                    <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-6 ml-2 object-contain mix-blend-multiply grayscale hover:grayscale-0" alt="Doctoranytime">
                 </a>
             </div>
         </div>
@@ -489,25 +610,26 @@
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="grid md:grid-cols-2 lg:grid-cols-12 gap-16 mb-20">
                 
-                <div class="lg:col-span-5 reveal">
-                    <h2 class="text-4xl font-serif mb-6 text-white">Κλείστε Ραντεβού</h2>
-                    <p class="text-brand-dust mb-10 font-light leading-relaxed">
-                        Η επούλωση ξεκινά με ένα βήμα. Επικοινωνήστε μαζί μας για να ορίσουμε την πρώτη σας συνεδρία σε ένα περιβάλλον απόλυτης αποδοχής.
+                <div class="lg:col-span-5 reveal space-y-8">
+                    <h2 class="text-4xl md:text-5xl font-serif text-white leading-tight text-balance">Ξεκινήστε το Ταξίδι σας</h2>
+                    <div class="w-16 h-px bg-brand-sand/50"></div>
+                    <p class="text-brand-dust mb-10 font-light leading-relaxed max-w-md">
+                        Η επούλωση ξεκινά με ένα βήμα. Επικοινωνήστε μαζί μας για να ορίσουμε την πρώτη σας συνεδρία σε ένα περιβάλλον απόλυτης αποδοχής και εχεμύθειας.
                     </p>
-                    <a href="https://www.doctoranytime.gr/d/Psychologos/dionysia-kontaksopoulou" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-brand-sand text-brand-navy px-8 py-4 text-xs font-bold uppercase tracking-widest-lux hover:bg-white transition-colors duration-500 shadow-float">
+                    <a href="https://www.doctoranytime.gr/d/Psychologos/dionysia-kontaksopoulou" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-brand-sand text-brand-navy px-10 py-5 text-xs font-bold uppercase tracking-widest-lux hover:bg-white transition-colors duration-500 shadow-float">
                         <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="DA" class="h-5 mr-4 mix-blend-multiply">
                         Κράτηση μέσω Doctoranytime
                     </a>
                 </div>
 
                 <div class="lg:col-span-3 lg:col-start-7 reveal delay-100">
-                    <h4 class="text-xs font-bold text-brand-sand mb-6 uppercase tracking-widest-lux">Επικοινωνία</h4>
-                    <ul class="space-y-6 text-brand-pearl/70 font-light">
+                    <h4 class="text-xs font-bold text-brand-sand mb-8 uppercase tracking-widest-lux">Στοιχεία Επικοινωνίας</h4>
+                    <ul class="space-y-6 text-brand-pearl/70 font-light text-base leading-relaxed">
                         <li class="flex items-start gap-4">
                             <i data-lucide="map-pin" class="w-5 h-5 text-brand-sand shrink-0 mt-0.5"></i>
                             <span class="leading-relaxed">Μιχαλακοπούλου 155,<br>Αμπελόκηποι, Αττική</span>
                         </li>
-                        <li class="flex items-center gap-4">
+                        <li class="flex items-center gap-4 border-t border-white/5 pt-6 mt-6">
                             <i data-lucide="phone" class="w-5 h-5 text-brand-sand shrink-0"></i>
                             <a href="tel:+306938621954" class="hover:text-white transition-colors">693 862 1954</a>
                         </li>
@@ -515,22 +637,22 @@
                 </div>
 
                 <div class="lg:col-span-3 reveal delay-200">
-                    <h4 class="text-xs font-bold text-brand-sand mb-6 uppercase tracking-widest-lux">Ωράριο</h4>
-                    <ul class="space-y-4 text-brand-pearl/70 font-light">
+                    <h4 class="text-xs font-bold text-brand-sand mb-8 uppercase tracking-widest-lux">Ωράριο Λειτουργίας</h4>
+                    <ul class="space-y-4 text-brand-pearl/70 font-light text-base leading-relaxed">
                         <li class="flex items-center gap-4">
-                            <i data-lucide="clock" class="w-5 h-5 text-brand-sand shrink-0"></i>
+                            <i data-lucide="calendar-days" class="w-5 h-5 text-brand-sand shrink-0"></i>
                             <span>Δευτέρα - Παρασκευή</span>
                         </li>
-                        <li class="pl-9 text-sm text-brand-sand/80 italic">Κατόπιν Ραντεβού</li>
+                        <li class="pl-9 text-base text-brand-sand italic font-medium">Κατόπιν Ραντεβού</li>
                     </ul>
                 </div>
 
             </div>
 
-            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 reveal">
-                <p class="text-brand-dust text-xs tracking-wider">© 2030 Ψυχολογικό Κέντρο. Με επιφύλαξη παντός δικαιώματος.</p>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 reveal">
+                <p class="text-brand-dust text-xs tracking-widest-lux font-medium">© 2030 Ψυχολογικό Κέντρο Δ. Κονταξοπούλου. Με επιφύλαξη παντός δικαιώματος.</p>
                 <p class="text-brand-dust text-xs tracking-wider">
-                    Designed by <a href="https://advonmedia.com" target="_blank" rel="noopener" class="text-brand-sand hover:text-white transition-colors">Advon Media</a>
+                    Designed by <a href="https://advonmedia.com" target="_blank" rel="noopener" class="text-brand-sand hover:text-white transition-colors font-semibold">Advon Media</a>
                 </p>
             </div>
         </div>
@@ -601,7 +723,24 @@
             if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
         });
 
-        // 6. Reviews Data Injection
+        // 6. Interactive Hero Gradient Wow Factor
+        const heroSection = document.querySelector('section');
+        const gradientOverlay = document.getElementById('hero-gradient');
+        
+        if(window.innerWidth > 1024) { // Only on desktop
+            heroSection.addEventListener('mousemove', (e) => {
+                const rect = heroSection.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                gradientOverlay.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(18, 28, 38, 0.2) 0%, rgba(18, 28, 38, 0.6) 100%)`;
+            });
+            
+            heroSection.addEventListener('mouseleave', () => {
+                gradientOverlay.style.background = `radial-gradient(circle at center, rgba(18, 28, 38, 0.2) 0%, rgba(18, 28, 38, 0.6) 100%)`;
+            });
+        }
+
+        // 7. Reviews Data Injection
         const reviews = [
             { name: "ΜΥΡΤΩ", score: "10.0", date: "06 Νοεμβρίου 2025", revs: "3", text: "Η Διονυσία είναι εξαιρετική επαγγελματίας και άνθρωπος! Είναι η ψυχολόγος μου πάνω από 1 χρόνο, με έχει βοηθήσει πολύ, εμπνέοντάς μου ασφάλεια." },
             { name: "Μάλαμα", score: "10.0", date: "28 Οκτωβρίου 2025", revs: "3", text: "Γλυκός άνθρωπος, προσιτός αλλά συνάμα επαγγελματίας που δημιουργεί ένα ασφαλές πλαίσιο για να εκράζεις όποιον προβληματισμό ή σκέψη σου." },
@@ -618,7 +757,7 @@
         ];
 
         const generateReviewCard = (r) => `
-            <div class="w-80 md:w-96 bg-white p-8 shadow-glass border border-brand-pearl shrink-0 flex flex-col justify-between">
+            <div class="w-80 md:w-96 bg-white p-8 shadow-glass border border-brand-pearl shrink-0 flex flex-col justify-between hover:shadow-lux hover:-translate-y-1 transition-all duration-500">
                 <div>
                     <div class="flex justify-between items-start mb-6">
                         <div class="flex flex-col">
@@ -627,13 +766,13 @@
                                 <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
                             </div>
                         </div>
-                        <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-4 object-contain opacity-40 grayscale" alt="DA">
+                        <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-4 object-contain opacity-30 grayscale" alt="DA">
                     </div>
                     <p class="text-brand-dust text-sm font-light italic leading-relaxed mb-6">"${r.text}"</p>
                 </div>
-                <div class="border-t border-brand-pearl pt-4">
-                    <p class="text-xs font-bold uppercase tracking-widest-lux text-brand-navy">${r.name}</p>
-                    <p class="text-xs text-brand-dust mt-1">${r.date} • ${r.revs} αξιολογήσεις</p>
+                <div class="border-t border-brand-pearl pt-4 mt-auto">
+                    <p class="text-xs font-semibold uppercase tracking-widest-lux text-brand-navy">${r.name}</p>
+                    <p class="text-xs text-brand-dust mt-1 font-light">${r.date} • ${r.revs} αξιολογήσεις</p>
                 </div>
             </div>
         `;
