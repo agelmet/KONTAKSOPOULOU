@@ -40,16 +40,16 @@
                         'float': '0 30px 60px -20px rgba(18, 28, 38, 0.15)',
                         'glass': '0 8px 32px 0 rgba(18, 28, 38, 0.05)',
                         'glow': '0 0 30px -5px rgba(217, 208, 199, 0.3)',
-                        'intense-glow': '0 25px 50px -12px rgba(18, 28, 38, 0.15), 0 0 40px -10px rgba(217, 208, 199, 0.5)',
+                        'intense-glow': '0 25px 50px -12px rgba(18, 28, 38, 0.15), 0 0 50px -10px rgba(217, 208, 199, 0.5)',
                     },
                     animation: {
                         'float': 'float 8s ease-in-out infinite',
                         'float-delayed': 'float 8s ease-in-out 4s infinite',
                         'marquee': 'marquee 60s linear infinite',
                         'kenburns': 'kenburns 30s ease-out both',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'reveal-text': 'revealText 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards',
-                        'blob': 'blob 15s infinite alternate',
+                        'blob': 'blob 20s infinite alternate',
                     },
                     keyframes: {
                         float: {
@@ -69,9 +69,9 @@
                             '100%': { transform: 'translateY(0)', opacity: 1 },
                         },
                         blob: {
-                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                            '50%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                            '100%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '0%': { transform: 'translate(0px, 0px) scale(1) rotate(0deg)' },
+                            '50%': { transform: 'translate(40px, -60px) scale(1.1) rotate(180deg)' },
+                            '100%': { transform: 'translate(-30px, 30px) scale(0.9) rotate(360deg)' },
                         }
                     }
                 }
@@ -154,56 +154,105 @@
         .modal-content-box { transform: translateY(30px); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
         #cv-modal.active .modal-content-box { transform: translateY(0); }
 
-        /* Super Wow Service Cards */
+        /* ------------------------------------------------------------------
+           SUPER WOW SERVICES CSS 
+           ------------------------------------------------------------------ */
+        
         .service-wow-card {
             position: relative;
             background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(217, 208, 199, 0.4);
-            border-radius: 1.5rem;
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            border-radius: 2rem;
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
             z-index: 10;
         }
-        .service-wow-card::before {
+        /* Light sweep effect */
+        .service-wow-card::after {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(135deg, rgba(217, 208, 199, 0.2), transparent);
-            border-radius: 1.5rem;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.6s ease;
+            top: 0; left: -150%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            transform: skewX(-25deg);
+            transition: all 0.8s ease;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .service-wow-card:hover::after {
+            left: 200%;
+            transition: all 1s ease-in-out;
         }
         .service-wow-card:hover {
-            transform: translateY(-12px) scale(1.02);
+            transform: translateY(-15px) scale(1.02);
+            background: rgba(255, 255, 255, 0.95);
             box-shadow: var(--tw-shadow-intense-glow);
             border-color: rgba(217, 208, 199, 1);
-            background: rgba(255, 255, 255, 0.95);
+            z-index: 20;
         }
-        .service-wow-card:hover::before {
-            opacity: 1;
-        }
+        
+        /* Icon Box Animation */
         .service-icon-box {
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            z-index: 2;
+        }
+        .icon-ring {
+            position: absolute;
+            inset: -6px;
+            border: 1px solid rgba(217, 208, 199, 0.8);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .service-wow-card:hover .icon-ring {
+            opacity: 1;
+            animation: pulse-slow 2s infinite;
         }
         .service-wow-card:hover .service-icon-box {
             transform: scale(1.15) translateY(-5px);
-            background-color: #D9D0C7;
-            color: #121C26;
-            box-shadow: 0 10px 20px -5px rgba(217, 208, 199, 0.6);
+            background-color: #121C26;
+            box-shadow: 0 15px 30px -5px rgba(18, 28, 38, 0.3);
         }
+        .icon-inner { transition: color 0.6s ease; }
         .service-wow-card:hover .icon-inner {
-            color: #121C26;
+            color: #D9D0C7;
         }
-        
+
+        .service-content { position: relative; z-index: 2; }
+
+        /* Approaches Wow Effect */
         .approach-card {
-            transition: all 0.5s ease;
+            background: transparent;
+            border-left: 2px solid rgba(217, 208, 199, 0.3);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            padding: 1.5rem 1rem 1.5rem 2rem;
+            border-radius: 0 1rem 1rem 0;
+        }
+        .approach-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0; width: 0;
+            background: linear-gradient(90deg, #D9D0C7, transparent);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: -1;
+            opacity: 0.15;
         }
         .approach-card:hover {
             border-left-color: #D9D0C7;
-            background: linear-gradient(90deg, rgba(217, 208, 199, 0.05), transparent);
-            padding-left: 2.5rem;
+            padding-left: 3rem;
+            box-shadow: 10px 10px 30px -10px rgba(18, 28, 38, 0.05);
+        }
+        .approach-card:hover::before {
+            width: 100%;
+        }
+        .approach-icon { transition: all 0.5s ease; }
+        .approach-card:hover .approach-icon {
+            transform: scale(1.2) rotate(10deg);
+            color: #121C26;
         }
     </style>
 
@@ -213,6 +262,7 @@
 
     <nav class="fixed w-full z-50 transition-all duration-500 glass-nav" id="navbar">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-end items-center">
+            
             <div class="hidden lg:flex items-center space-x-10">
                 <a href="#about" class="text-xs uppercase tracking-widest-lux font-semibold text-brand-navy/70 hover:text-brand-navy transition-colors">Η Προσέγγιση</a>
                 <a href="#team" class="text-xs uppercase tracking-widest-lux font-semibold text-brand-navy/70 hover:text-brand-navy transition-colors">Η Ομάδα</a>
@@ -266,8 +316,8 @@
         </div>
     </section>
 
-    <section id="about" class="py-32 px-6 bg-brand-pearl relative">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
+    <section id="about" class="py-32 px-6 bg-brand-pearl relative overflow-hidden">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center relative z-10">
             <div class="relative reveal">
                 <div class="img-wrap shadow-float bg-white p-4 border border-brand-sand/20">
                     <img src="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0057.jpg" alt="Ψυχική Υγεία" class="w-full h-auto object-contain grayscale-[15%]">
@@ -286,31 +336,31 @@
                     Μέσα από ένα πλαίσιο αποδοχής, εμπιστοσύνης και επιστημονικής γνώσης, παρέχεται υποστήριξη με στόχο την κατανόηση του εαυτού, τη διαχείριση των δυσκολιών και την ενίσχυση της ψυχικής ισορροπίας.
                 </p>
 
-                <div class="bg-white/60 p-8 rounded-xl border border-brand-sand/30 shadow-sm">
+                <div class="bg-white/70 backdrop-blur-xl p-8 rounded-2xl border border-brand-sand/30 shadow-glass mt-10 hover:shadow-lux transition-shadow duration-500">
                     <span class="text-brand-navy text-xs uppercase tracking-widest-lux font-bold block mb-6">Εξειδίκευση σε:</span>
-                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-brand-dust text-sm md:text-base font-light">
-                        <li class="flex items-start gap-3">
-                            <i data-lucide="check" class="w-5 h-5 text-brand-sand shrink-0 mt-0.5"></i>
+                    <ul class="space-y-4 text-brand-dust text-sm md:text-base font-light">
+                        <li class="flex items-start gap-4">
+                            <div class="mt-1 w-1.5 h-1.5 rounded-full bg-brand-sand shrink-0"></div>
                             <span>Γνωσιακή Συμπεριφοριστική Ψυχοθεραπεία (CBT)</span>
                         </li>
-                        <li class="flex items-start gap-3">
-                            <i data-lucide="check" class="w-5 h-5 text-brand-sand shrink-0 mt-0.5"></i>
+                        <li class="flex items-start gap-4">
+                            <div class="mt-1 w-1.5 h-1.5 rounded-full bg-brand-sand shrink-0"></div>
                             <span>Διαλεκτική Συμπεριφορική Ψυχοθεραπεία (DBT)</span>
                         </li>
-                        <li class="flex items-start gap-3">
-                            <i data-lucide="check" class="w-5 h-5 text-brand-sand shrink-0 mt-0.5"></i>
+                        <li class="flex items-start gap-4">
+                            <div class="mt-1 w-1.5 h-1.5 rounded-full bg-brand-sand shrink-0"></div>
                             <span>Συστημική Ψυχοθεραπεία</span>
                         </li>
-                        <li class="flex items-start gap-3">
-                            <i data-lucide="check" class="w-5 h-5 text-brand-sand shrink-0 mt-0.5"></i>
+                        <li class="flex items-start gap-4">
+                            <div class="mt-1 w-1.5 h-1.5 rounded-full bg-brand-sand shrink-0"></div>
                             <span>Τραυματοθεραπεία EMDR</span>
                         </li>
-                        <li class="flex items-start gap-3">
-                            <i data-lucide="check" class="w-5 h-5 text-brand-sand shrink-0 mt-0.5"></i>
+                        <li class="flex items-start gap-4">
+                            <div class="mt-1 w-1.5 h-1.5 rounded-full bg-brand-sand shrink-0"></div>
                             <span>Νευροψυχολογική Αξιολόγηση/Αξιολόγηση Νοητικών Λειτουργιών</span>
                         </li>
-                        <li class="flex items-start gap-3">
-                            <i data-lucide="check" class="w-5 h-5 text-brand-sand shrink-0 mt-0.5"></i>
+                        <li class="flex items-start gap-4">
+                            <div class="mt-1 w-1.5 h-1.5 rounded-full bg-brand-sand shrink-0"></div>
                             <span>Νοητική Ενδυνάμωση/Αποκατάσταση</span>
                         </li>
                     </ul>
@@ -414,8 +464,9 @@
     </section>
 
     <section id="services" class="py-32 bg-brand-pearl px-6 relative overflow-hidden">
-        <div class="absolute top-20 left-10 w-96 h-96 bg-brand-sand/10 rounded-full blur-3xl mix-blend-multiply animate-blob"></div>
-        <div class="absolute bottom-20 right-10 w-96 h-96 bg-brand-slate/5 rounded-full blur-3xl mix-blend-multiply animate-blob" style="animation-delay: 2s;"></div>
+        
+        <div class="absolute top-[10%] left-[-10%] w-[500px] h-[500px] bg-brand-sand/20 rounded-full blur-[100px] mix-blend-multiply animate-blob pointer-events-none"></div>
+        <div class="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-brand-slate/10 rounded-full blur-[120px] mix-blend-multiply animate-blob pointer-events-none" style="animation-delay: 5s; animation-direction: reverse;"></div>
 
         <div class="max-w-7xl mx-auto relative z-10">
             
@@ -425,121 +476,155 @@
                 <div class="w-16 h-px bg-brand-sand mx-auto"></div>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-32 reveal delay-100">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-32 reveal delay-100 pb-12">
                 
-                <div class="service-wow-card p-10 flex flex-col group cursor-default">
-                    <div class="service-icon-box w-16 h-16 rounded-full bg-brand-sand/20 flex items-center justify-center mb-8 text-brand-navy shadow-glass">
-                        <i data-lucide="user" class="icon-inner w-8 h-8 text-brand-slate transition-colors"></i>
+                <div class="flex flex-col gap-8">
+                    <div class="service-wow-card p-10 flex flex-col group cursor-default">
+                        <div class="service-content">
+                            <div class="service-icon-box w-16 h-16 rounded-full bg-white flex items-center justify-center mb-8 text-brand-slate border border-brand-sand/30">
+                                <div class="icon-ring"></div>
+                                <i data-lucide="user" class="icon-inner w-7 h-7"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-navy mb-4">Ατομικές Συνεδρίες</h3>
+                            <p class="text-brand-dust text-sm font-light leading-relaxed">
+                                Εξατομικευμένη ψυχοθεραπευτική παρέμβαση που απευθύνεται σε ένα ευρύ φάσμα ψυχοπαθολογίας. Περιλαμβάνονται διαταραχές άγχους (γενικευμένη αγχώδης διαταραχή, διαταραχή πανικού, ειδικές φοβίες, κοινωνικό άγχος), ιδεοψυχαναγκαστικές και συναφείς διαταραχές, διαταραχές που σχετίζονται με τραύμα και στρεσογόνους παράγοντες (π.χ. διαταραχή μετατραυματικού στρες), διαταραχές διάθεσης, διαχείριση πένθους, διαταραχές ύπνου-εγρήγορσης, διαταραχές προσωπικότητας και νευροαναπτυξιακές διαταραχές (π.χ. ΔΕΠΥ, διαταραχές αυτιστικού φάσματος). Επιπλέον, περιλαμβάνονται σωματόμορφες διαταραχές και δυσκολίες προσαρμογής ή διαπροσωπικής λειτουργικότητας.
+                            </p>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold text-brand-navy mb-4">Ατομικές Συνεδρίες</h3>
-                    <p class="text-brand-dust text-sm font-light leading-relaxed">
-                        Εξατομικευμένη ψυχοθεραπευτική παρέμβαση που απευθύνεται σε ένα ευρύ φάσμα ψυχοπαθολογίας. Περιλαμβάνονται διαταραχές άγχους (γενικευμένη αγχώδης διαταραχή, διαταραχή πανικού, ειδικές φοβίες, κοινωνικό άγχος), ιδεοψυχαναγκαστικές και συναφείς διαταραχές, διαταραχές που σχετίζονται με τραύμα και στρεσογόνους παράγοντες (π.χ. διαταραχή μετατραυματικού στρες), διαταραχές διάθεσης, διαχείριση πένθους, διαταραχές ύπνου-εγρήγορσης, διαταραχές προσωπικότητας και νευροαναπτυξιακές διαταραχές (π.χ. ΔΕΠΥ, διαταραχές αυτιστικού φάσματος). Επιπλέον, περιλαμβάνονται σωματόμορφες διαταραχές και δυσκολίες προσαρμογής ή διαπροσωπικής λειτουργικότητας.
-                    </p>
+
+                    <div class="service-wow-card p-10 flex flex-col group cursor-default">
+                        <div class="service-content">
+                            <div class="service-icon-box w-16 h-16 rounded-full bg-white flex items-center justify-center mb-8 text-brand-slate border border-brand-sand/30">
+                                <div class="icon-ring"></div>
+                                <i data-lucide="brain" class="icon-inner w-7 h-7"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-navy mb-4">Νευροψυχολογική αξιολόγηση</h3>
+                            <p class="text-brand-dust text-sm font-light leading-relaxed">
+                                Εξειδικευμένη διαδικασία εκτίμησης των νοητικών λειτουργιών, όπως η μνήμη, η προσοχή, οι εκτελεστικές λειτουργίες, η γλώσσα και η οπτικοχωρική ικανότητα. Εφαρμόζεται σε περιπτώσεις νευρολογικών νοσημάτων (π.χ. άνοια, κρανιοεγκεφαλικές κακώσεις, αγγειακά εγκεφαλικά επεισόδια), αλλά και σε ψυχιατρικές ή αναπτυξιακές δυσκολίες. Στόχος είναι η αποτύπωση του γνωστικού προφίλ, η συμβολή στη διαγνωστική διερεύνηση και ο σχεδιασμός κατάλληλων παρεμβάσεων ή αποκατάστασης.
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="service-wow-card p-10 flex flex-col group cursor-default">
-                    <div class="service-icon-box w-16 h-16 rounded-full bg-brand-sand/20 flex items-center justify-center mb-8 text-brand-navy shadow-glass">
-                        <i data-lucide="monitor-smartphone" class="icon-inner w-8 h-8 text-brand-slate transition-colors"></i>
+                <div class="flex flex-col gap-8 lg:mt-12">
+                    <div class="service-wow-card p-10 flex flex-col group cursor-default">
+                        <div class="service-content">
+                            <div class="service-icon-box w-16 h-16 rounded-full bg-white flex items-center justify-center mb-8 text-brand-slate border border-brand-sand/30">
+                                <div class="icon-ring"></div>
+                                <i data-lucide="laptop" class="icon-inner w-7 h-7"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-navy mb-4">Οnline Συνεδρίες</h3>
+                            <p class="text-brand-dust text-sm font-light leading-relaxed">
+                                Συνεδρίες που πραγματοποιούνται εξ αποστάσεως και απευθύνονται σε άτομα που δεν μπορούν να παρευρεθούν δια ζώσης (π.χ. λόγω απόστασης ή διαμονής στο εξωτερικό), διασφαλίζοντας σταθερότητα και συνέχεια στη θεραπευτική διαδικασία.
+                            </p>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold text-brand-navy mb-4">Online Συνεδρίες</h3>
-                    <p class="text-brand-dust text-sm font-light leading-relaxed">
-                        Συνεδρίες που πραγματοποιούνται εξ αποστάσεως και απευθύνονται σε άτομα που δεν μπορούν να παρευρεθούν δια ζώσης (π.χ. λόγω απόστασης ή διαμονής στο εξωτερικό), διασφαλίζοντας σταθερότητα και συνέχεια στη θεραπευτική διαδικασία.
-                    </p>
+
+                    <div class="service-wow-card p-10 flex flex-col group cursor-default">
+                        <div class="service-content">
+                            <div class="service-icon-box w-16 h-16 rounded-full bg-white flex items-center justify-center mb-8 text-brand-slate border border-brand-sand/30">
+                                <div class="icon-ring"></div>
+                                <i data-lucide="puzzle" class="icon-inner w-7 h-7"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-navy mb-4">Νοητική Ενδυνάμωση / Αποκατάσταση</h3>
+                            <p class="text-brand-dust text-sm font-light leading-relaxed">
+                                Εξειδικευμένες παρεμβάσεις που στοχεύουν στη βελτίωση, ενίσχυση ή αποκατάσταση γνωστικών λειτουργιών, όπως η μνήμη, η προσοχή και οι εκτελεστικές δεξιότητες. Εφαρμόζονται σε άτομα με νευρολογικές ή νευροψυχολογικές δυσκολίες, καθώς και σε περιπτώσεις φυσιολογικής γήρανσης, με στόχο τη διατήρηση της λειτουργικότητας και την ενίσχυση της αυτονομίας στην καθημερινότητα.
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="service-wow-card p-10 flex flex-col group cursor-default">
-                    <div class="service-icon-box w-16 h-16 rounded-full bg-brand-sand/20 flex items-center justify-center mb-8 text-brand-navy shadow-glass">
-                        <i data-lucide="users" class="icon-inner w-8 h-8 text-brand-slate transition-colors"></i>
+                <div class="flex flex-col gap-8 lg:mt-24">
+                    <div class="service-wow-card p-10 flex flex-col group cursor-default">
+                        <div class="service-content">
+                            <div class="service-icon-box w-16 h-16 rounded-full bg-white flex items-center justify-center mb-8 text-brand-slate border border-brand-sand/30">
+                                <div class="icon-ring"></div>
+                                <i data-lucide="users" class="icon-inner w-7 h-7"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-navy mb-4">Ομαδικές Συνεδρίες</h3>
+                            <p class="text-brand-dust text-sm font-light leading-relaxed">
+                                Ομαδικές παρεμβάσεις που βασίζονται στη συστημική προσέγγιση, με έμφαση στην κατανόηση των σχεσιακών μοτίβων και των οικογενειακών δυναμικών. Παράλληλα, πραγματοποιούνται ομάδες Διαλεκτικής Συμπεριφορικής Θεραπείας (DBT), εστιασμένες στην εκπαίδευση δεξιοτήτων, όπως η ρύθμιση συναισθημάτων, η ανοχή στη δυσφορία, η ενσυνειδητότητα και η αποτελεσματική επικοινωνία, με στόχο την ενίσχυση της λειτουργικότητας και της ψυχικής ανθεκτικότητας.
+                            </p>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold text-brand-navy mb-4">Ομαδικές Συνεδρίες</h3>
-                    <p class="text-brand-dust text-sm font-light leading-relaxed">
-                        Ομαδικές παρεμβάσεις που βασίζονται στη συστημική προσέγγιση, με έμφαση στην κατανόηση των σχεσιακών μοτίβων και των οικογενειακών δυναμικών. Παράλληλα, πραγματοποιούνται ομάδες Διαλεκτικής Συμπεριφορικής Θεραπείας (DBT), εστιασμένες στην εκπαίδευση δεξιοτήτων, όπως η ρύθμιση συναισθημάτων, η ανοχή στη δυσφορία, η ενσυνειδητότητα και η αποτελεσματική επικοινωνία, με στόχο την ενίσχυση της λειτουργικότητας και της ψυχικής ανθεκτικότητας.
-                    </p>
-                </div>
 
-                <div class="service-wow-card p-10 flex flex-col group cursor-default">
-                    <div class="service-icon-box w-16 h-16 rounded-full bg-brand-sand/20 flex items-center justify-center mb-8 text-brand-navy shadow-glass">
-                        <i data-lucide="brain" class="icon-inner w-8 h-8 text-brand-slate transition-colors"></i>
+                    <div class="service-wow-card p-10 flex flex-col group cursor-default">
+                        <div class="service-content">
+                            <div class="service-icon-box w-16 h-16 rounded-full bg-white flex items-center justify-center mb-8 text-brand-slate border border-brand-sand/30">
+                                <div class="icon-ring"></div>
+                                <i data-lucide="heart-handshake" class="icon-inner w-7 h-7"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-navy mb-4">Υποστήριξη Γονέων και Εφήβων</h3>
+                            <p class="text-brand-dust text-sm font-light leading-relaxed">
+                                Συμβουλευτική και ψυχοεκπαίδευση που εστιάζει στις αναπτυξιακές ανάγκες των εφήβων και στις δυναμικές της οικογένειας. Στόχος είναι η κατανόηση της συμπεριφοράς, η διαχείριση συναισθηματικών και συμπεριφορικών δυσκολιών, καθώς και η ενίσχυση της επικοινωνίας και του γονεϊκού ρόλου μέσα από τεκμηριωμένες παρεμβάσεις.
+                            </p>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold text-brand-navy mb-4">Νευροψυχολογική Αξιολόγηση</h3>
-                    <p class="text-brand-dust text-sm font-light leading-relaxed">
-                        Εξειδικευμένη διαδικασία εκτίμησης των νοητικών λειτουργιών, όπως η μνήμη, η προσοχή, οι εκτελεστικές λειτουργίες, η γλώσσα και η οπτικοχωρική ικανότητα. Εφαρμόζεται σε περιπτώσεις νευρολογικών νοσημάτων (π.χ. άνοια, κρανιοεγκεφαλικές κακώσεις, αγγειακά εγκεφαλικά επεισόδια), αλλά και σε ψυχιατρικές ή αναπτυξιακές δυσκολίες. Στόχος είναι η αποτύπωση του γνωστικού προφίλ, η συμβολή στη διαγνωστική διερεύνηση και ο σχεδιασμός κατάλληλων παρεμβάσεων ή αποκατάστασης.
-                    </p>
                 </div>
-
-                <div class="service-wow-card p-10 flex flex-col group cursor-default">
-                    <div class="service-icon-box w-16 h-16 rounded-full bg-brand-sand/20 flex items-center justify-center mb-8 text-brand-navy shadow-glass">
-                        <i data-lucide="puzzle" class="icon-inner w-8 h-8 text-brand-slate transition-colors"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-brand-navy mb-4">Νοητική Ενδυνάμωση / Αποκατάσταση</h3>
-                    <p class="text-brand-dust text-sm font-light leading-relaxed">
-                        Εξειδικευμένες παρεμβάσεις που στοχεύουν στη βελτίωση, ενίσχυση ή αποκατάσταση γνωστικών λειτουργιών, όπως η μνήμη, η προσοχή και οι εκτελεστικές δεξιότητες. Εφαρμόζονται σε άτομα με νευρολογικές ή νευροψυχολογικές δυσκολίες, καθώς και σε περιπτώσεις φυσιολογικής γήρανσης, με στόχο τη διατήρηση της λειτουργικότητας και την ενίσχυση της αυτονομίας στην καθημερινότητα.
-                    </p>
-                </div>
-
-                <div class="service-wow-card p-10 flex flex-col group cursor-default">
-                    <div class="service-icon-box w-16 h-16 rounded-full bg-brand-sand/20 flex items-center justify-center mb-8 text-brand-navy shadow-glass">
-                        <i data-lucide="heart-handshake" class="icon-inner w-8 h-8 text-brand-slate transition-colors"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-brand-navy mb-4">Υποστήριξη Γονέων & Εφήβων</h3>
-                    <p class="text-brand-dust text-sm font-light leading-relaxed">
-                        Συμβουλευτική και ψυχοεκπαίδευση που εστιάζει στις αναπτυξιακές ανάγκες των εφήβων και στις δυναμικές της οικογένειας. Στόχος είναι η κατανόηση της συμπεριφοράς, η διαχείριση συναισθηματικών και συμπεριφορικών δυσκολιών, καθώς και η ενίσχυση της επικοινωνίας και του γονεϊκού ρόλου μέσα από τεκμηριωμένες παρεμβάσεις.
-                    </p>
-                </div>
-
+                
             </div>
 
-            <div class="bg-white p-12 lg:p-20 rounded-2xl shadow-float border border-brand-sand/20 reveal delay-200 relative z-10">
-                <h3 class="text-3xl font-serif text-brand-navy mb-16 text-center">Ψυχοθεραπευτικές Προσεγγίσεις</h3>
+            <div class="bg-white/40 backdrop-blur-2xl p-10 md:p-16 lg:p-20 rounded-[2.5rem] shadow-float border border-brand-sand/40 reveal delay-200 relative z-10">
+                <h3 class="text-3xl md:text-4xl font-serif text-brand-navy mb-16 text-center">Ψυχοθεραπευτικές Προσεγγίσεις</h3>
                 
-                <div class="space-y-4">
-                    <div class="approach-card border-l-4 border-brand-pearl pl-6 py-6 group cursor-default">
+                <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+                    
+                    <div class="approach-card group">
                         <div class="flex items-center gap-4 mb-4">
-                            <i data-lucide="lightbulb" class="w-6 h-6 text-brand-sand group-hover:rotate-12 transition-transform"></i>
-                            <h4 class="text-xl font-bold text-brand-slate">Γνωσιακή Συμπεριφοριστική Ψυχοθεραπεία (CBT)</h4>
+                            <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center shrink-0 border border-brand-sand/20">
+                                <i data-lucide="lightbulb" class="approach-icon w-5 h-5 text-brand-sand"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-brand-slate">Γνωσιακή Συμπεριφοριστική (CBT)</h4>
                         </div>
-                        <p class="text-brand-dust leading-relaxed text-sm font-light">
+                        <p class="text-brand-dust leading-relaxed text-sm font-light relative z-10">
                             Η Γνωσιακή Συμπεριφοριστική Ψυχοθεραπεία αποτελεί την πιο τεκμηριωμένη και ευρέως εφαρμοζόμενη ψυχοθεραπευτική προσέγγιση. Εστιάζει στη δυναμική αλληλεπίδραση μεταξύ σκέψεων, συναισθημάτων, σωματικών αντιδράσεων και συμπεριφορών, καθώς και στον τρόπο με τον οποίο διαμορφώνονται και διατηρούνται τα γνωσιακά σχήματα μέσα από την εμπειρία. Δυσλειτουργικές πεποιθήσεις και γνωσιακές στρεβλώσεις μπορεί να οδηγούν σε επαναλαμβανόμενα μοτίβα που επιβαρύνουν τη λειτουργικότητα του ατόμου.<br><br>
-                            Στο πλαίσιο της θεραπείας, δίνεται έμφαση στο να αναγνωρίσει το άτομο τα μοτίβα σκέψηs και συμπεριφοράς που το δυσκολεύουν και να μάθει σταδιακά να τα αλλάζει. Αυτό γίνεται μέσα από πρακτικές τεχνικές, όπως η κατανόηση και επανεξέταση των σκέψεων με πιο ρεαλιστικό τρόπο, η σταδιακή ενεργοποίηση σε δραστηριότητες που έχουν περιοριστεί, η ήπια και σταδιακή έκθεση σε καταστάσεις που προκαλούν άγχος ή αποφυγή, καθώς και η εκμάθηση δεξιοτήτων για καλύτερη διαχείριση συναισθημάτων και καθημερινών δυσκολιών. Η διαδικασία είναι δομημένη και συνεργατική, με στόχο όχι μόνο τη μείωση των συμπτωμάτων αλλά και την καλλιέργεια αυτοπαρατήρησης και αυτορρύθμισης.<br><br>
+                            Στο πλαίσιο της θεραπείας, δίνεται έμφαση στο να αναγνωρίσει το άτομο τα μοτίβα σκέψης και συμπεριφοράς που το δυσκολεύουν και να μάθει σταδιακά να τα αλλάζει. Αυτό γίνεται μέσα από πρακτικές τεχνικές, όπως η κατανόηση και επανεξέταση των σκέψεων με πιο ρεαλιστικό τρόπο, η σταδιακή ενεργοποίηση σε δραστηριότητες που έχουν περιοριστεί, η ήπια και σταδιακή έκθεση σε καταστάσεις που προκαλούν άγχος ή αποφυγή, καθώς και η εκμάθηση δεξιοτήτων για καλύτερη διαχείριση συναισθημάτων και καθημερινών δυσκολιών. Η διαδικασία είναι δομημένη και συνεργατική, με στόχο όχι μόνο τη μείωση των συμπτωμάτων αλλά και την καλλιέργεια αυτοπαρατήρησης και αυτορρύθμισης.<br><br>
                             Η CBT εφαρμόζεται σε ένα ευρύ φάσμα κλινικών και μη κλινικών δυσκολιών, όπως διαταραχές άγχους και διάθεσης, ιδεοψυχαναγκαστικές διαταραχές, διαταραχές πρόσληψης τροφής, διαταραχές ύπνου, σωματόμορφες διαταραχές, ζητήματα διαχείρισης θυμού, χρόνιο στρες, αλλά και σε δυσκολίες που σχετίζονται με αυτοεκτίμηση, τελειοθηρία και διαπροσωπική λειτουργικότητα.
                         </p>
                     </div>
 
-                    <div class="approach-card border-l-4 border-brand-pearl pl-6 py-6 group cursor-default">
+                    <div class="approach-card group">
                         <div class="flex items-center gap-4 mb-4">
-                            <i data-lucide="scale" class="w-6 h-6 text-brand-sand group-hover:rotate-12 transition-transform"></i>
-                            <h4 class="text-xl font-bold text-brand-slate">Διαλεκτική Συμπεριφορική Ψυχοθεραπεία (DBT)</h4>
+                            <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center shrink-0 border border-brand-sand/20">
+                                <i data-lucide="scale" class="approach-icon w-5 h-5 text-brand-sand"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-brand-slate">Διαλεκτική Συμπεριφορική (DBT)</h4>
                         </div>
-                        <p class="text-brand-dust leading-relaxed text-sm font-light">
+                        <p class="text-brand-dust leading-relaxed text-sm font-light relative z-10">
                             Η Διαλεκτική Συμπεριφορική Ψυχοθεραπεία αποτελεί εξέλιξη της γνωσιακής-συμπεριφορικής προσέγγισης και αναπτύχθηκε για άτομα που δυσκολεύονται στη διαχείριση έντονων και μεταβαλλόμενων συναισθημάτων. Κεντρική της αρχή είναι η ισορροπία ανάμεσα στην αποδοχή της εμπειρίας του ατόμου και την προσπάθεια για αλλαγή.<br><br>
                             Η θεραπεία περιλαμβάνει την εκπαίδευση σε συγκεκριμένες δεξιότητες, οι οποίες οργανώνονται σε τέσσερις βασικούς άξονες: ενσυνειδητότητα, ρύθμιση συναισθημάτων, ανοχή στη δυσφορία και διαπροσωπική αποτελεσματικότητα. Οι δεξιότητες αυτές βοηθούν το άτομο να ανταποκρίνεται με μεγαλύτερη ευελιξία και σταθερότητα σε απαιτητικές ή στρεσογόνες καταστάσεις.<br><br>
                             Η DBT εφαρμόζεται κυρίως σε περιπτώσεις έντονης συναισθηματικής δυσρρύθμισης, όπως στη διαταραχή οριακής προσωπικότητας, αλλά και σε άλλες δυσκολίες που σχετίζονται με παρορμητικότητα, αυτοκαταστροφικές συμπεριφορές και δυσκολίες στις σχέσεις.
                         </p>
                     </div>
 
-                    <div class="approach-card border-l-4 border-brand-pearl pl-6 py-6 group cursor-default">
+                    <div class="approach-card group">
                         <div class="flex items-center gap-4 mb-4">
-                            <i data-lucide="network" class="w-6 h-6 text-brand-sand group-hover:rotate-12 transition-transform"></i>
+                            <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center shrink-0 border border-brand-sand/20">
+                                <i data-lucide="network" class="approach-icon w-5 h-5 text-brand-sand"></i>
+                            </div>
                             <h4 class="text-xl font-bold text-brand-slate">Συστημική Ψυχοθεραπεία</h4>
                         </div>
-                        <p class="text-brand-dust leading-relaxed text-sm font-light">
+                        <p class="text-brand-dust leading-relaxed text-sm font-light relative z-10">
                             Η Συστημική Ψυχοθεραπεία προσεγγίζει το άτομο ως μέρος ευρύτερων συστημάτων, όπως η οικογένεια, το ζευγάρι και το κοινωνικό περιβάλλον. Οι δυσκολίες δεν εξετάζονται μεμονωμένα, αλλά μέσα από τα μοτίβα αλληλεπίδρασης και επικοινωνίας που αναπτύσσονται στις σχέσεις.<br><br>
                             Η θεραπευτική διαδικασία εστιάζει στην κατανόηση του τρόπου με τον οποίο οι σχέσεις επηρεάζουν τη συμπεριφορά και τη συναισθηματική εμπειρία. Διερευνώνται επαναλαμβανόμενα μοτίβα, ρόλοι και τρόποι επικοινωνίας που μπορεί να συμβάλλουν στη διατήρηση των δυσκολιών.<br><br>
                             Στόχος είναι η αναγνώριση εναλλακτικών τρόπων σύνδεσης και επικοινωνίας, καθώς και η ενίσχυση πιο λειτουργικών μορφών αλληλεπίδρασης. Η προσέγγιση εφαρμόζεται σε ατομικές συνεδρίες, αλλά και σε θεραπεία ζεύγους ή οικογένειας.
                         </p>
                     </div>
 
-                    <div class="approach-card border-l-4 border-brand-pearl pl-6 py-6 group cursor-default">
+                    <div class="approach-card group">
                         <div class="flex items-center gap-4 mb-4">
-                            <i data-lucide="eye" class="w-6 h-6 text-brand-sand group-hover:rotate-12 transition-transform"></i>
+                            <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center shrink-0 border border-brand-sand/20">
+                                <i data-lucide="eye" class="approach-icon w-5 h-5 text-brand-sand"></i>
+                            </div>
                             <h4 class="text-xl font-bold text-brand-slate">Τραυματοθεραπεία EMDR</h4>
                         </div>
-                        <p class="text-brand-dust leading-relaxed text-sm font-light">
+                        <p class="text-brand-dust leading-relaxed text-sm font-light relative z-10">
                             Η μέθοδος EMDR αποτελεί μία σύγχρονη, επιστημονικά τεκμηριωμένη προσέγγιση για την επεξεργασία τραυματικών εμπειριών. Βασίζεται στη θεωρία ότι ορισμένα τραυματικά γεγονότα δεν έχουν ενσωματωθεί επαρκώς στη μνήμη και παραμένουν «ενεργά», επηρεάζοντας αρνητικά τη σκέψη, το συναίσθημα και τη συμπεριφορά.<br><br>
                             Κατά τη διάρκεια της θεραπείας, χρησιμοποιείται διμερής διέγερση (όπως οφθαλμικές κινήσεις), η οποία διευκολύνει την επανεπεξεργασία των τραυματικών αναμνήσεων. Μέσα από αυτή τη διαδικασία, μειώνεται η συναισθηματική ένταση και τροποποιούνται οι αρνητικές πεποιθήσεις που σχετίζονται με το τραύμα.<br><br>
                             Η EMDR εφαρμόζεται κυρίως στη διαταραχή μετατραυματικού στρες (PTSD), αλλά και σε άλλες καταστάσεις που συνδέονται με τραυματικές εμπειρίες ή έντονο στρες, συμβάλλοντας στη σταδιακή αποφόρτιση και την ψυχολογική επεξεργασία του βιώματος.
                         </p>
                     </div>
+
                 </div>
             </div>
 
