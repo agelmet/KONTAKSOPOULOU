@@ -12,6 +12,9 @@
     <!-- Favicon -->
     <link rel="icon" href="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0057.jpg" type="image/jpeg">
 
+    <!-- LCP Optimization: Preload Hero Background Image -->
+    <link rel="preload" as="image" href="https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0085.jpg" fetchpriority="high">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,30 +50,14 @@
                         'intense-glow': '0 25px 50px -12px rgba(18, 28, 38, 0.15), 0 0 50px -10px rgba(217, 208, 199, 0.5)',
                     },
                     animation: {
-                        'float': 'float 8s ease-in-out infinite',
-                        'float-delayed': 'float 8s ease-in-out 4s infinite',
                         'marquee': 'marquee 60s linear infinite',
-                        'kenburns': 'kenburns 30s ease-out both',
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'reveal-text': 'revealText 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards',
                         'blob': 'blob 20s infinite alternate',
                     },
                     keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-15px)' },
-                        },
                         marquee: {
                             '0%': { transform: 'translateX(0%)' },
                             '100%': { transform: 'translateX(-50%)' },
-                        },
-                        kenburns: {
-                            '0%': { transform: 'scale(1.1)' },
-                            '100%': { transform: 'scale(1)' },
-                        },
-                        revealText: {
-                            '0%': { transform: 'translateY(100%)', opacity: 0 },
-                            '100%': { transform: 'translateY(0)', opacity: 1 },
                         },
                         blob: {
                             '0%': { transform: 'translate(0px, 0px) scale(1) rotate(0deg)' },
@@ -131,22 +118,12 @@
             margin: 0 auto;
         }
 
-        .hero-title-part {
-            display: inline-block;
-            opacity: 0;
-            animation: revealText 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
-        }
-        .hero-title-part:nth-child(1) { animation-delay: 0.1s; }
-        .hero-title-part:nth-child(2) { animation-delay: 0.3s; }
-        .hero-title-part:nth-child(3) { animation-delay: 0.5s; }
-
         #hero-gradient {
             position: absolute;
             inset: 0;
             background: radial-gradient(circle at center, transparent 0%, rgba(18, 28, 38, 0.5) 100%);
             z-index: 15;
             pointer-events: none;
-            transition: background 0.3s ease;
         }
 
         /* Modal Styles */
@@ -255,7 +232,8 @@
         }
     </style>
 
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Defer loading of icons -->
+    <script src="https://unpkg.com/lucide@latest" defer></script>
 </head>
 <body class="font-sans antialiased selection:bg-brand-sand selection:text-brand-navy">
 
@@ -272,7 +250,7 @@
                 <a href="#contact" class="px-8 py-3.5 bg-brand-navy text-white text-xs uppercase tracking-widest-lux font-semibold hover:bg-brand-slate shadow-lux transition-all duration-500 hover:-translate-y-1">Κλείστε Ραντεβού</a>
             </div>
 
-            <button class="lg:hidden text-brand-navy focus:outline-none" id="mobile-menu-btn">
+            <button class="lg:hidden text-brand-navy focus:outline-none" id="mobile-menu-btn" aria-label="Menu">
                 <i data-lucide="menu" class="w-8 h-8"></i>
             </button>
         </div>
@@ -287,10 +265,11 @@
         </div>
     </nav>
 
-    <!-- Hero Section (Ultra Minimal & Focused) -->
+    <!-- Hero Section (Optimized for LCP/FCP) -->
     <section class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-brand-navy pt-24 pb-16">
+        <!-- JS Animations & Opacity classes removed to allow immediate paint -->
         <div class="absolute inset-0 z-0">
-            <div class="w-full h-full bg-cover bg-center animate-kenburns scale-105 grayscale-[40%] opacity-70" style="background-image: url('https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0085.jpg');"></div>
+            <div class="w-full h-full bg-cover bg-center grayscale-[40%] opacity-70" style="background-image: url('https://raw.githubusercontent.com/agelmet/KONTAKSOPOULOU/refs/heads/main/GLS_0085.jpg');"></div>
         </div>
         
         <div id="hero-gradient"></div>
@@ -298,18 +277,18 @@
 
         <div class="relative z-20 text-center px-6 w-full max-w-5xl mx-auto flex flex-col items-center justify-center">
             
-            <span class="block text-brand-sand text-xs md:text-sm uppercase tracking-[0.4em] font-medium mb-6 opacity-0 animate-reveal-text" style="animation-delay: 0.1s">Ασφαλές Πλαίσιο Αποδοχής & Εμπιστοσύνης</span>
+            <span class="block text-brand-sand text-xs md:text-sm uppercase tracking-[0.4em] font-medium mb-6">Ασφαλές Πλαίσιο Αποδοχής & Εμπιστοσύνης</span>
             
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-tight mb-8 text-balance drop-shadow-2xl">
-                <span class="hero-title-part">Εξέλιξη &</span>
-                <span class="hero-title-part italic text-brand-sand">Ψυχική Ισορροπία</span>
+                <span>Εξέλιξη &</span>
+                <span class="italic text-brand-sand">Ψυχική Ισορροπία</span>
             </h1>
             
-            <div class="lux-line mb-10 bg-white/20 opacity-0 animate-reveal-text" style="animation-delay: 0.8s"></div>
+            <div class="lux-line mb-10 bg-white/20"></div>
 
-            <div class="opacity-0 animate-reveal-text" style="animation-delay: 1s">
+            <div>
                 <a href="#contact" class="inline-flex items-center justify-center px-12 py-5 bg-transparent border border-brand-sand/40 text-white text-xs uppercase tracking-widest-lux hover:bg-brand-sand hover:text-brand-navy hover:border-brand-sand transition-all duration-500 backdrop-blur-sm group">
-                    Κλείστε Ραντεβού
+                    Ξεκίνησε το ταξίδι
                     <i data-lucide="arrow-right" class="w-4 h-4 ml-3 group-hover:translate-x-2 transition-transform"></i>
                 </a>
             </div>
@@ -763,7 +742,7 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-12 gap-16 mb-20">
                 
                 <div class="lg:col-span-5 reveal space-y-8">
-                    <h2 class="text-4xl md:text-5xl font-serif text-white leading-tight text-balance">Ξεκίνησε το ταξίδι</h2>
+                    <h2 class="text-4xl md:text-5xl font-serif text-white leading-tight text-balance">Ξεκινήστε το ταξίδι</h2>
                     <div class="w-16 h-px bg-brand-sand/50"></div>
                     <p class="text-brand-dust mb-10 font-light leading-relaxed max-w-md">
                         Η επούλωση ξεκινά με ένα βήμα. Επικοινωνήστε μαζί μας για να ορίσουμε την πρώτη σας συνεδρία σε ένα περιβάλλον απόλυτης αποδοχής και εχεμύθειας.
@@ -872,64 +851,123 @@
     </div>
 
     <script>
-        lucide.createIcons();
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
 
-        const mobileBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
 
-        mobileBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            mobileMenu.classList.toggle('flex');
-        });
+            if (mobileBtn && mobileMenu) {
+                mobileBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    mobileMenu.classList.toggle('flex');
+                });
+            }
 
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-                mobileMenu.classList.remove('flex');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenu.classList.remove('flex');
+                });
             });
-        });
 
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('py-2', 'shadow-sm');
-                navbar.classList.remove('py-4');
-            } else {
-                navbar.classList.add('py-4');
-                navbar.classList.remove('py-2', 'shadow-sm');
+            const navbar = document.getElementById('navbar');
+            if (navbar) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        navbar.classList.add('py-2', 'shadow-sm');
+                        navbar.classList.remove('py-4');
+                    } else {
+                        navbar.classList.add('py-4');
+                        navbar.classList.remove('py-2', 'shadow-sm');
+                    }
+                });
+            }
+
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            }, observerOptions);
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            const reviews = [
+                { name: "ΜΥΡΤΩ", score: "10.0", date: "06 Νοεμβρίου 2025", revs: "3", text: "Η Διονυσία είναι εξαιρετική επαγγελματίας και άνθρωπος! Είναι η ψυχολόγος μου πάνω από 1 χρόνο, με έχει βοηθήσει πολύ, εμπνέοντάς μου ασφάλεια." },
+                { name: "Μάλαμα", score: "10.0", date: "28 Οκτωβρίου 2025", revs: "3", text: "Γλυκός άνθρωπος, προσιτός αλλά συνάμα επαγγελματίας που δημιουργεί ένα ασφαλές πλαίσιο για να εκράζεις όποιον προβληματισμό ή σκέψη σου." },
+                { name: "ΈΦΗ", score: "10.0", date: "11 Οκτωβρίου 2025", revs: "4", text: "Με ευγένεια, ενσυναίσθηση και επαγγελματισμό άκουσε το πρόβλημά μου. Με έκανε να νιώσω άνεση & ασφάλεια από την πρώτη συνεδρίαση." },
+                { name: "Χριστόφορος", score: "10.0", date: "14 Δεκεμβρίου 2024", revs: "2", text: "Ζεστή και ανθρώπινη αντιμετώπιση." },
+                { name: "Manolis", score: "10.0", date: "04 Οκτωβρίου 2024", revs: "3", text: "Καταρτισμένη και καταπληκτική στο είδος της." },
+                { name: "George", score: "10.0", date: "10 Σεπτεμβρίου 2024", revs: "2", text: "Από την πρώτη στιγμή έδειξε κατανόηση, με προσέγγισε με διακριτικότητα και με έκανε να αισθανθώ άνετα." },
+                { name: "ΚΩΝΣΤΑΝΤΙΝΑ", score: "10.0", date: "07 Μαρτίου 2024", revs: "4", text: "Πολύ ευχάριστη πρώτη εμπειρία. Ένιωσα οικεία αμέσως. Ζεστός και προσιτός άνθρωπος." },
+                { name: "Ρένια", score: "10.0", date: "14 Νοεμβρίου 2023", revs: "1", text: "Ήταν επαγγελματίας και φιλική, με άκουσε με προσοχή και κατανόηση και με έκανε να αισθανθώ άνετα." },
+                { name: "Vagelis", score: "10.0", date: "14 Νοεμβρίου 2023", revs: "1", text: "Καταπληκτική στη δουλειά της! Με βοήθησε αρκετά και σχετικά γρήγορα." },
+                { name: "Angeliki", score: "10.0", date: "06 Οκτωβρίου 2023", revs: "1", text: "Με βοηθάει να αντιμετωπίζω πολλά πράγματα και ανακαλύπτω τον εαυτό μου. Την εμπιστεύομαι απόλυτα." },
+                { name: "Χρύσα", score: "10.0", date: "06 Οκτωβρίου 2023", revs: "1", text: "Η μέθοδος που χρησιμοποιεί είναι αποτελεσματική και το περιβάλλον απόλυτα ασφαλές." },
+                { name: "Κατερινα", score: "10.0", date: "30 Σεπτεμβρίου 2023", revs: "1", text: "Οι συνεδρίες μαζί της μου έχουν αλλάξει τη ζωή. Την ευχαριστώ θερμά." }
+            ];
+
+            const generateReviewCard = (r) => `
+                <div class="w-80 md:w-96 bg-white p-8 shadow-glass border border-brand-pearl shrink-0 flex flex-col justify-between hover:shadow-lux hover:-translate-y-1 transition-all duration-500">
+                    <div>
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="flex flex-col">
+                                <span class="font-bold text-brand-navy text-lg">${r.score} / 10</span>
+                                <div class="flex text-brand-sand mt-1">
+                                    <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                </div>
+                            </div>
+                            <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-4 object-contain opacity-30 grayscale" alt="DA">
+                        </div>
+                        <p class="text-brand-dust text-sm font-light italic leading-relaxed mb-6">"${r.text}"</p>
+                    </div>
+                    <div class="border-t border-brand-pearl pt-4 mt-auto">
+                        <p class="text-xs font-semibold uppercase tracking-widest-lux text-brand-navy">${r.name}</p>
+                        <p class="text-xs text-brand-dust mt-1 font-light">${r.date} • ${r.revs} αξιολογήσεις</p>
+                    </div>
+                </div>
+            `;
+
+            const track1 = document.getElementById('review-track');
+            const track2 = document.getElementById('review-track-clone');
+            if (track1 && track2) {
+                let htmlStr = '';
+                reviews.forEach(r => htmlStr += generateReviewCard(r));
+                track1.innerHTML = htmlStr;
+                track2.innerHTML = htmlStr;
+                
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
             }
         });
 
-        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target); 
-                }
-            });
-        }, observerOptions);
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // Lightbox
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
 
         function openLightbox(src) {
-            lightboxImg.src = src;
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            if (lightbox && lightboxImg) {
+                lightboxImg.src = src;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
         }
         function closeLightbox() {
-            lightbox.classList.remove('active');
-            setTimeout(() => {
-                lightboxImg.src = '';
-                document.body.style.overflow = '';
-            }, 500);
+            if (lightbox && lightboxImg) {
+                lightbox.classList.remove('active');
+                setTimeout(() => {
+                    lightboxImg.src = '';
+                    document.body.style.overflow = '';
+                }, 500);
+            }
         }
 
-        // CV Modal Logic
         const cvModal = document.getElementById('cv-modal');
         const modalTitle = document.getElementById('modal-title');
         const modalSubtitle = document.getElementById('modal-subtitle');
@@ -955,88 +993,32 @@
         };
 
         function openCvModal(id) {
-            const dataHtml = document.getElementById(id).innerHTML;
-            modalTitle.textContent = teamData[id].name;
-            modalSubtitle.textContent = teamData[id].role;
-            modalBody.innerHTML = dataHtml;
-            cvModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            const el = document.getElementById(id);
+            if (el && cvModal && modalTitle && modalSubtitle && modalBody) {
+                const dataHtml = el.innerHTML;
+                modalTitle.textContent = teamData[id].name;
+                modalSubtitle.textContent = teamData[id].role;
+                modalBody.innerHTML = dataHtml;
+                cvModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
         }
 
         function closeCvModal() {
-            cvModal.classList.remove('active');
-            setTimeout(() => {
-                document.body.style.overflow = '';
-            }, 400);
+            if (cvModal) {
+                cvModal.classList.remove('active');
+                setTimeout(() => {
+                    document.body.style.overflow = '';
+                }, 400);
+            }
         }
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                if (lightbox.classList.contains('active')) closeLightbox();
-                if (cvModal.classList.contains('active')) closeCvModal();
+                if (lightbox && lightbox.classList.contains('active')) closeLightbox();
+                if (cvModal && cvModal.classList.contains('active')) closeCvModal();
             }
         });
-
-        const heroSection = document.querySelector('section');
-        const gradientOverlay = document.getElementById('hero-gradient');
-        
-        if(window.innerWidth > 1024) { 
-            heroSection.addEventListener('mousemove', (e) => {
-                const rect = heroSection.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / rect.width) * 100;
-                const y = ((e.clientY - rect.top) / rect.height) * 100;
-                gradientOverlay.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(18, 28, 38, 0.2) 0%, rgba(18, 28, 38, 0.7) 100%)`;
-            });
-            
-            heroSection.addEventListener('mouseleave', () => {
-                gradientOverlay.style.background = `radial-gradient(circle at center, rgba(18, 28, 38, 0.2) 0%, rgba(18, 28, 38, 0.7) 100%)`;
-            });
-        }
-
-        const reviews = [
-            { name: "ΜΥΡΤΩ", score: "10.0", date: "06 Νοεμβρίου 2025", revs: "3", text: "Η Διονυσία είναι εξαιρετική επαγγελματίας και άνθρωπος! Είναι η ψυχολόγος μου πάνω από 1 χρόνο, με έχει βοηθήσει πολύ, εμπνέοντάς μου ασφάλεια." },
-            { name: "Μάλαμα", score: "10.0", date: "28 Οκτωβρίου 2025", revs: "3", text: "Γλυκός άνθρωπος, προσιτός αλλά συνάμα επαγγελματίας που δημιουργεί ένα ασφαλές πλαίσιο για να εκράζεις όποιον προβληματισμό ή σκέψη σου." },
-            { name: "ΈΦΗ", score: "10.0", date: "11 Οκτωβρίου 2025", revs: "4", text: "Με ευγένεια, ενσυναίσθηση και επαγγελματισμό άκουσε το πρόβλημά μου. Με έκανε να νιώσω άνεση & ασφάλεια από την πρώτη συνεδρίαση." },
-            { name: "Χριστόφορος", score: "10.0", date: "14 Δεκεμβρίου 2024", revs: "2", text: "Ζεστή και ανθρώπινη αντιμετώπιση." },
-            { name: "Manolis", score: "10.0", date: "04 Οκτωβρίου 2024", revs: "3", text: "Καταρτισμένη και καταπληκτική στο είδος της." },
-            { name: "George", score: "10.0", date: "10 Σεπτεμβρίου 2024", revs: "2", text: "Από την πρώτη στιγμή έδειξε κατανόηση, με προσέγγισε με διακριτικότητα και με έκανε να αισθανθώ άνετα." },
-            { name: "ΚΩΝΣΤΑΝΤΙΝΑ", score: "10.0", date: "07 Μαρτίου 2024", revs: "4", text: "Πολύ ευχάριστη πρώτη εμπειρία. Ένιωσα οικεία αμέσως. Ζεστός και προσιτός άνθρωπος." },
-            { name: "Ρένια", score: "10.0", date: "14 Νοεμβρίου 2023", revs: "1", text: "Ήταν επαγγελματίας και φιλική, με άκουσε με προσοχή και κατανόηση και με έκανε να αισθανθώ άνετα." },
-            { name: "Vagelis", score: "10.0", date: "14 Νοεμβρίου 2023", revs: "1", text: "Καταπληκτική στη δουλειά της! Με βοήθησε αρκετά και σχετικά γρήγορα." },
-            { name: "Angeliki", score: "10.0", date: "06 Οκτωβρίου 2023", revs: "1", text: "Με βοηθάει να αντιμετωπίζω πολλά πράγματα και ανακαλύπτω τον εαυτό μου. Την εμπιστεύομαι απόλυτα." },
-            { name: "Χρύσα", score: "10.0", date: "06 Οκτωβρίου 2023", revs: "1", text: "Η μέθοδος που χρησιμοποιεί είναι αποτελεσματική και το περιβάλλον απόλυτα ασφαλές." },
-            { name: "Κατερινα", score: "10.0", date: "30 Σεπτεμβρίου 2023", revs: "1", text: "Οι συνεδρίες μαζί της μου έχουν αλλάξει τη ζωή. Την ευχαριστώ θερμά." }
-        ];
-
-        const generateReviewCard = (r) => `
-            <div class="w-80 md:w-96 bg-white p-8 shadow-glass border border-brand-pearl shrink-0 flex flex-col justify-between hover:shadow-lux hover:-translate-y-1 transition-all duration-500">
-                <div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="flex flex-col">
-                            <span class="font-bold text-brand-navy text-lg">${r.score} / 10</span>
-                            <div class="flex text-brand-sand mt-1">
-                                <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
-                            </div>
-                        </div>
-                        <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-4 object-contain opacity-30 grayscale" alt="DA">
-                    </div>
-                    <p class="text-brand-dust text-sm font-light italic leading-relaxed mb-6">"${r.text}"</p>
-                </div>
-                <div class="border-t border-brand-pearl pt-4 mt-auto">
-                    <p class="text-xs font-semibold uppercase tracking-widest-lux text-brand-navy">${r.name}</p>
-                    <p class="text-xs text-brand-dust mt-1 font-light">${r.date} • ${r.revs} αξιολογήσεις</p>
-                </div>
-            </div>
-        `;
-
-        const track1 = document.getElementById('review-track');
-        const track2 = document.getElementById('review-track-clone');
-        let htmlStr = '';
-        reviews.forEach(r => htmlStr += generateReviewCard(r));
-        track1.innerHTML = htmlStr;
-        track2.innerHTML = htmlStr;
-
-        lucide.createIcons(); 
     </script>
 </body>
 </html>
