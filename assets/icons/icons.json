@@ -1,0 +1,16 @@
+{
+ "source": {
+  "kind": "file",
+  "ref": "assets/img/kontaxopoulou-logo-icon.svg"
+ },
+ "source_md5": "73074fc9c0e33ed3217bf72b31b7dd4a",
+ "version": "97bf5f85",
+ "tile": null,
+ "crop": null,
+ "header": [
+  "inline",
+  "index.html",
+  "7911f46a010e8b0fc90dd29d1b1be872"
+ ],
+ "made": "2026-11-11"
+}
